@@ -11,7 +11,7 @@ LOGGER = get_dagster_logger(__name__)
 
 from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
-from OpenStudioLandscapes.Template import dist
+from OpenStudioLandscapes.OpenCue_Worker import dist
 
 config_default = pathlib.Path(__file__).parent.joinpath("config_default.yml")
 CONFIG_STR = config_default.read_text()
@@ -25,9 +25,9 @@ class Config(FeatureBaseModel):
 
     feature_name: str = dist.name
 
-    enabled: bool = False
+    compose_scope: str = "worker"
 
-    definitions: str = "OpenStudioLandscapes.Template.definitions"
+    definitions: str = "OpenStudioLandscapes.OpenCue_Worker.definitions"
 
     ENV_VAR_PORT_HOST: PositiveInt = Field(
         default=1234,

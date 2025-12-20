@@ -38,9 +38,15 @@ from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
-from OpenStudioLandscapes.Template import dist
-from OpenStudioLandscapes.Template.config.models import CONFIG_STR, Config
-from OpenStudioLandscapes.Template.constants import *
+from OpenStudioLandscapes.OpenCue_Worker import dist
+from OpenStudioLandscapes.OpenCue_Worker.config.models import CONFIG_STR, Config
+from OpenStudioLandscapes.OpenCue_Worker.constants import *
+
+# Override default ConfigParent
+from OpenStudioLandscapes.OpenCue.config.models import Config as ConfigParent
+from OpenStudioLandscapes.OpenCue.constants import (
+    ASSET_HEADER as ASSET_HEADER_FEATURE_IN,
+)
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
 yaml.SafeDumper.add_multi_representer(
@@ -68,7 +74,7 @@ CONFIG: AssetsDefinition = get_feature__CONFIG(
 feature_in: AssetsDefinition = get_feature_in(
     ASSET_HEADER=ASSET_HEADER,
     ASSET_HEADER_BASE=ASSET_HEADER_BASE,
-    ASSET_HEADER_FEATURE_IN={},
+    ASSET_HEADER_FEATURE_IN=ASSET_HEADER_FEATURE_IN,
 )
 
 group_out: AssetsDefinition = get_group_out(
@@ -285,7 +291,7 @@ def compose_networks(
         ),
     },
 )
-def compose_template(
+def compose_override(
     context: AssetExecutionContext,
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     build: Dict,  # pylint: disable=redefined-outer-name
@@ -402,8 +408,8 @@ def compose_template(
 @asset(
     **ASSET_HEADER,
     ins={
-        "compose_template": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "compose_template"]),
+        "compose_override": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_override"]),
         ),
     },
 )

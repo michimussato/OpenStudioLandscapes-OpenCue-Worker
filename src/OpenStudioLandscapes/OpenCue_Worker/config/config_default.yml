@@ -1,9 +1,9 @@
 # Base Information
-group_name: "OpenStudioLandscapes_Template"
+group_name: "OpenStudioLandscapes_OpenCue_Worker"
 key_prefixes:
-  - "OpenStudioLandscapes_Template"
+  - "OpenStudioLandscapes_OpenCue_Worker"
 
-#compose_scope: "default"
+#compose_scope: "worker"
 
 #enabled: false
 

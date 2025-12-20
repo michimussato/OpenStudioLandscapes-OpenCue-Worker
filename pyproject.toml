@@ -24,7 +24,7 @@ dependencies = [
     "importlib-metadata; python_version<\"3.8\"",
     "snakemd",
 ]
-description = "Template Feature for OpenStudioLandscapes"
+description = "OpenCue-Worker Feature for OpenStudioLandscapes"
 dynamic = [
     "version",
 ]
@@ -34,7 +34,7 @@ license-files = [
 maintainers = [
     { email = "michimussato@gmail.com", name = "Michael Mussato" },
 ]
-name = "OpenStudioLandscapes-Template"
+name = "OpenStudioLandscapes-OpenCue-Worker"
 requires-python = ">=3.11"
 
 [project.entry-points]
@@ -45,12 +45,12 @@ coverage = [
     "pytest",
 ]
 dev = [
-    "OpenStudioLandscapes-Template[coverage]",
-    "OpenStudioLandscapes-Template[lint]",
-    "OpenStudioLandscapes-Template[nox]",
-    "OpenStudioLandscapes-Template[readme]",
-    "OpenStudioLandscapes-Template[sbom]",
-    "OpenStudioLandscapes-Template[testing]",
+    "OpenStudioLandscapes-OpenCue-Worker[coverage]",
+    "OpenStudioLandscapes-OpenCue-Worker[lint]",
+    "OpenStudioLandscapes-OpenCue-Worker[nox]",
+    "OpenStudioLandscapes-OpenCue-Worker[readme]",
+    "OpenStudioLandscapes-OpenCue-Worker[sbom]",
+    "OpenStudioLandscapes-OpenCue-Worker[testing]",
 ]
 graphviz = [
     "graphviz",
@@ -65,7 +65,7 @@ lint = [
 ]
 nox = [
     "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
-    "OpenStudioLandscapes-Template[testing]",
+    "OpenStudioLandscapes-OpenCue-Worker[testing]",
     "nox",
 ]
 pyproject = [
@@ -77,7 +77,7 @@ readme = [
 ]
 sbom = [
     "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
-    "OpenStudioLandscapes-Template[graphviz]",
+    "OpenStudioLandscapes-OpenCue-Worker[graphviz]",
     "cyclonedx-bom",
 ]
 testing = [
@@ -91,16 +91,16 @@ content-type = "text/markdown; charset=UTF-8"
 file = "README.md"
 
 [project.urls]
-Homepage = "https://github.com/michimussato/OpenStudioLandscapes-Template"
+Homepage = "https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker"
 
 [tool.dagster]
-code_location_name = "OpenStudioLandscapes-Template"
-module_name = "OpenStudioLandscapes.Template.definitions"
+code_location_name = "OpenStudioLandscapes-OpenCue-Worker"
+module_name = "OpenStudioLandscapes.OpenCue_Worker.definitions"
 
 [tool.setuptools]
 include-package-data = true
 packages = [
-    "OpenStudioLandscapes.Template",
+    "OpenStudioLandscapes.OpenCue_Worker",
 ]
 platforms = [
     "Linux",

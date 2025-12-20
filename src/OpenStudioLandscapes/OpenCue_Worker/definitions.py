@@ -3,10 +3,10 @@ from dagster import (
     load_assets_from_modules,
 )
 
-import OpenStudioLandscapes.Template.assets
+import OpenStudioLandscapes.OpenCue_Worker.assets
 
 assets = load_assets_from_modules(
-    modules=[OpenStudioLandscapes.Template.assets],
+    modules=[OpenStudioLandscapes.OpenCue_Worker.assets],
 )
 
 

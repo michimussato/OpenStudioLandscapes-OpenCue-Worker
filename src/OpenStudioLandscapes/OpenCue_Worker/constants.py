@@ -2,7 +2,7 @@ __all__ = [
     "ASSET_HEADER",
 ]
 
-from OpenStudioLandscapes.Template import dist
+from OpenStudioLandscapes.OpenCue_Worker import dist
 
 # Todo
 #  - [ ] fix this naive replacement logic
