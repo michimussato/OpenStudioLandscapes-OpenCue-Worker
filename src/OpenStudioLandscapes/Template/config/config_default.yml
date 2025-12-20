@@ -1,0 +1,13 @@
+# Base Information
+group_name: "OpenStudioLandscapes_Template"
+key_prefixes:
+  - "OpenStudioLandscapes_Template"
+
+#compose_scope: "default"
+
+#enabled: false
+
+#ENV_VAR_PORT_HOST: 1234
+#ENV_VAR_PORT_CONTAINER: 2345
+
+#MOUNTED_VOLUME: "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/volume"

@@ -1,0 +1,110 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools-scm>=9",
+    "setuptools>=80",
+]
+
+[project]
+authors = [
+    { email = "michimussato@gmail.com", name = "Michael Mussato" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: OpenStudioLandscapes",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "PyYAML",
+    "dagster==1.9.11",
+    "deprecation",
+    "docker-compose-graph @ git+https://github.com/michimussato/docker-compose-graph.git@v1.0.0",
+    "email-validator",
+    "gitpython",
+    "importlib-metadata; python_version<\"3.8\"",
+    "snakemd",
+]
+description = "Template Feature for OpenStudioLandscapes"
+dynamic = [
+    "version",
+]
+license-files = [
+    "LICENSE.txt",
+]
+maintainers = [
+    { email = "michimussato@gmail.com", name = "Michael Mussato" },
+]
+name = "OpenStudioLandscapes-Template"
+requires-python = ">=3.11"
+
+[project.entry-points]
+
+[project.optional-dependencies]
+coverage = [
+    "coverage",
+    "pytest",
+]
+dev = [
+    "OpenStudioLandscapes-Template[coverage]",
+    "OpenStudioLandscapes-Template[lint]",
+    "OpenStudioLandscapes-Template[nox]",
+    "OpenStudioLandscapes-Template[readme]",
+    "OpenStudioLandscapes-Template[sbom]",
+    "OpenStudioLandscapes-Template[testing]",
+]
+graphviz = [
+    "graphviz",
+    "pipdeptree",
+]
+lint = [
+    "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
+    "black",
+    "isort",
+    "pre-commit",
+    "pylint",
+]
+nox = [
+    "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
+    "OpenStudioLandscapes-Template[testing]",
+    "nox",
+]
+pyproject = [
+    "OpenStudioLandscapesUtil-VersionBumper @ git+https://github.com/michimussato/OpenStudioLandscapesUtil-VersionBumper.git",
+]
+readme = [
+    "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
+    "OpenStudioLandscapesUtil-ReadmeGenerator @ git+https://github.com/michimussato/OpenStudioLandscapesUtil-ReadmeGenerator.git",
+]
+sbom = [
+    "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes.git",
+    "OpenStudioLandscapes-Template[graphviz]",
+    "cyclonedx-bom",
+]
+testing = [
+    "pytest",
+    "pytest-cov",
+    "setuptools",
+]
+
+[project.readme]
+content-type = "text/markdown; charset=UTF-8"
+file = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/michimussato/OpenStudioLandscapes-Template"
+
+[tool.dagster]
+code_location_name = "OpenStudioLandscapes-Template"
+module_name = "OpenStudioLandscapes.Template.definitions"
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+    "OpenStudioLandscapes.Template",
+]
+platforms = [
+    "Linux",
+]
+
+[tool.setuptools.package-dir]
+"" = "src"
