@@ -29,31 +29,28 @@ class Config(FeatureBaseModel):
 
     definitions: str = "OpenStudioLandscapes.OpenCue_Worker.definitions"
 
-    ENV_VAR_PORT_HOST: PositiveInt = Field(
-        default=1234,
-        description="The host port.",
-        frozen=True,
-    )
-    ENV_VAR_PORT_CONTAINER: PositiveInt = Field(
-        default=2345,
-        description="The Ayon container port.",
-        frozen=False,
+
+    OPENCUE_WORKER_DEPLOY_RQD_ONLY: bool = Field(
+        default=True,
     )
 
-    MOUNTED_VOLUME: pathlib.Path = Field(
-        description="The host side mounted volume.",
-        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/volume"),
+    docker_compose_override: pathlib.Path = Field(
+        default=pathlib.Path(
+            "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.override.yml"
+        ),
+        description="The path to the `docker-compose.yml` file.",
+        frozen=True,
     )
 
     # EXPANDABLE PATHS
     @property
-    def MOUNTED_VOLUME_expanded(self) -> pathlib.Path:
+    def docker_compose_override_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
         if self.env is None:
             raise KeyError("`env` is `None`.")
-        LOGGER.debug(f"Expanding {self.MOUNTED_VOLUME}...")
+        LOGGER.debug(f"Expanding {self.docker_compose_override}...")
         ret = pathlib.Path(
-            self.MOUNTED_VOLUME.expanduser()
+            self.docker_compose_override.expanduser()
             .as_posix()
             .format(
                 **{
@@ -63,3 +60,38 @@ class Config(FeatureBaseModel):
             )
         )
         return ret
+
+    # ENV_VAR_PORT_HOST: PositiveInt = Field(
+    #     default=1234,
+    #     description="The host port.",
+    #     frozen=True,
+    # )
+    # ENV_VAR_PORT_CONTAINER: PositiveInt = Field(
+    #     default=2345,
+    #     description="The Ayon container port.",
+    #     frozen=False,
+    # )
+    #
+    # MOUNTED_VOLUME: pathlib.Path = Field(
+    #     description="The host side mounted volume.",
+    #     default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/volume"),
+    # )
+
+    # # EXPANDABLE PATHS
+    # @property
+    # def MOUNTED_VOLUME_expanded(self) -> pathlib.Path:
+    #     LOGGER.debug(f"{self.env = }")
+    #     if self.env is None:
+    #         raise KeyError("`env` is `None`.")
+    #     LOGGER.debug(f"Expanding {self.MOUNTED_VOLUME}...")
+    #     ret = pathlib.Path(
+    #         self.MOUNTED_VOLUME.expanduser()
+    #         .as_posix()
+    #         .format(
+    #             **{
+    #                 "FEATURE": self.feature_name,
+    #                 **self.env,
+    #             }
+    #         )
+    #     )
+    #     return ret
