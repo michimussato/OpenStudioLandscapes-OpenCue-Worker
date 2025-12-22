@@ -32,7 +32,7 @@ class Config(FeatureBaseModel):
     opencue_rqd_worker: str = "opencue-rqd-worker"
 
     opencue_worker_NUM_SERVICES: int = Field(
-        default=3,
+        default=5,
         description="Number of workers to simulate in parallel.",
     )
 
