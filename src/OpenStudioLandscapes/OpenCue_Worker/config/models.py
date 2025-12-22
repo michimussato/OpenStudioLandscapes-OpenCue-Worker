@@ -29,12 +29,14 @@ class Config(FeatureBaseModel):
 
     compose_scope: str = "worker"
 
-    flamenco_worker_NUM_SERVICES: int = Field(
-        default=5,
+    opencue_rqd_worker: str = "opencue-rqd-worker"
+
+    opencue_worker_NUM_SERVICES: int = Field(
+        default=1,
         description="Number of workers to simulate in parallel.",
     )
 
-    flamenco_worker_PADDING: int = Field(
+    opencue_worker_PADDING: int = Field(
         default=3,
     )
 
