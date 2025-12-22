@@ -32,7 +32,7 @@ class Config(FeatureBaseModel):
     opencue_rqd_worker: str = "opencue-rqd-worker"
 
     opencue_worker_NUM_SERVICES: int = Field(
-        default=1,
+        default=3,
         description="Number of workers to simulate in parallel.",
     )
 
@@ -40,21 +40,25 @@ class Config(FeatureBaseModel):
         default=3,
     )
 
+    opencue_worker_storage: pathlib.Path = Field(
+        default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage"),
+    )
+
     # EXPANDABLE PATHS
-    # @property
-    # def MOUNTED_VOLUME_expanded(self) -> pathlib.Path:
-    #     LOGGER.debug(f"{self.env = }")
-    #     if self.env is None:
-    #         raise KeyError("`env` is `None`.")
-    #     LOGGER.debug(f"Expanding {self.MOUNTED_VOLUME}...")
-    #     ret = pathlib.Path(
-    #         self.MOUNTED_VOLUME.expanduser()
-    #         .as_posix()
-    #         .format(
-    #             **{
-    #                 "FEATURE": self.feature_name,
-    #                 **self.env,
-    #             }
-    #         )
-    #     )
-    #     return ret
+    @property
+    def opencue_worker_storage_expanded(self) -> pathlib.Path:
+        LOGGER.debug(f"{self.env = }")
+        if self.env is None:
+            raise KeyError("`env` is `None`.")
+        LOGGER.debug(f"Expanding {self.opencue_worker_storage}...")
+        ret = pathlib.Path(
+            self.opencue_worker_storage.expanduser()
+            .as_posix()
+            .format(
+                **{
+                    "FEATURE": self.feature_name,
+                    **self.env,
+                }
+            )
+        )
+        return ret
