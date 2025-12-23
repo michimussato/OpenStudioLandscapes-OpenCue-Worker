@@ -72,10 +72,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: typing.Dict
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # =============
@@ -84,10 +91,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'OpenStudioLandscapes.engine.config.models.ConfigEngine'>
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # =============
@@ -96,10 +110,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'OpenStudioLandscapes.engine.config.models.FeatureBaseModel'>
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # ============
@@ -108,10 +129,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'importlib.metadata.Distribution'>
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # ==========
@@ -120,10 +148,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'str'>
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # ============
@@ -132,10 +167,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: typing.List[str]
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         None
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 
 
 # =======
@@ -144,10 +186,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'bool'>
 # Base Class:
+#     Required: False
 #     Description:
 #         Whether the Feature is enabled or not.
 #     Default value:
 #         True
+# Description:
+#     Whether the Feature is enabled or not.
+# Required: False
+#     Whether the Feature is enabled or not.
+# Examples:
+#     None
 
 
 # =============
@@ -156,10 +205,17 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 #
 # Type: <class 'str'>
 # Base Class:
+#     Required: False
 #     Description:
 #         None
 #     Default value:
 #         default
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 compose_scope: worker
 
 
@@ -169,10 +225,17 @@ compose_scope: worker
 #
 # Type: <class 'str'>
 # Base Class:
+#     Required: True
 #     Description:
 #         The name of the feature. It is derived from the `OpenStudioLandscapes.<Feature>.dist` attribute.
 #     Default value:
 #         PydanticUndefined
+# Description:
+#     None
+# Required: False
+#     None
+# Examples:
+#     None
 feature_name: OpenStudioLandscapes-OpenCue-Worker
 
 
@@ -182,10 +245,17 @@ feature_name: OpenStudioLandscapes-OpenCue-Worker
 #
 # Type: <class 'pathlib.Path'>
 # Base Class:
+#     Required: False
 #     Description:
 #         The path to the `docker-compose.yml` file.
 #     Default value:
 #         {DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml
+# Description:
+#     The path to the `docker-compose.yml` file.
+# Required: False
+#     The path to the `docker-compose.yml` file.
+# Examples:
+#     None
 
 
 # ==================
@@ -193,7 +263,9 @@ feature_name: OpenStudioLandscapes-OpenCue-Worker
 # ------------------
 #
 # Type: <class 'str'>
-# Sub Class Description:
+# Description:
+#     None
+# Required: False
 #     None
 # Examples:
 #     None
@@ -205,7 +277,9 @@ opencue_rqd_worker: opencue-rqd-worker
 # ---------------------------
 #
 # Type: <class 'int'>
-# Sub Class Description:
+# Description:
+#     Number of workers to simulate in parallel.
+# Required: False
 #     Number of workers to simulate in parallel.
 # Examples:
 #     None
@@ -217,7 +291,9 @@ opencue_worker_NUM_SERVICES: 1
 # ----------------------
 #
 # Type: <class 'int'>
-# Sub Class Description:
+# Description:
+#     None
+# Required: False
 #     None
 # Examples:
 #     None
@@ -229,7 +305,9 @@ opencue_worker_PADDING: 3
 # ----------------------
 #
 # Type: <class 'pathlib.Path'>
-# Sub Class Description:
+# Description:
+#     None
+# Required: False
 #     None
 # Examples:
 #     None
@@ -473,4 +551,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 12:26:19 UTC**
+Last changed: **2025-12-23 12:48:40 UTC**
