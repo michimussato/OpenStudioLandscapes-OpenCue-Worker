@@ -9,12 +9,12 @@ from pydantic import (
 
 LOGGER = get_dagster_logger(__name__)
 
+from OpenStudioLandscapes.engine.config.str_gen import get_config_str
 from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
 from OpenStudioLandscapes.OpenCue_Worker import dist
 
 config_default = pathlib.Path(__file__).parent.joinpath("config_default.yml")
-CONFIG_STR = config_default.read_text()
 
 
 class Branches(enum.StrEnum):
@@ -25,18 +25,16 @@ class Config(FeatureBaseModel):
 
     feature_name: str = dist.name
 
-    definitions: str = "OpenStudioLandscapes.OpenCue_Worker.definitions"
-
     compose_scope: str = "worker"
 
     opencue_rqd_worker: str = "opencue-rqd-worker"
 
-    opencue_worker_NUM_SERVICES: int = Field(
+    opencue_worker_NUM_SERVICES: PositiveInt = Field(
         default=1,
         description="Number of workers to simulate in parallel.",
     )
 
-    opencue_worker_PADDING: int = Field(
+    opencue_worker_PADDING: PositiveInt = Field(
         default=3,
     )
 
@@ -62,3 +60,9 @@ class Config(FeatureBaseModel):
             )
         )
         return ret
+
+
+CONFIG_STR = get_config_str(
+    Config=Config,
+)
+
