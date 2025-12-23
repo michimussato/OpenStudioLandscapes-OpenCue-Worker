@@ -322,9 +322,6 @@ opencue_worker_PADDING: 3
 # Examples:
 #     None
 opencue_worker_storage: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
-
-
-
 ```
 
 ***
@@ -561,4 +558,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 13:35:02 UTC**
+Last changed: **2025-12-23 13:37:23 UTC**
