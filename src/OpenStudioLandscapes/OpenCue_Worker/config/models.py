@@ -14,8 +14,6 @@ from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
 from OpenStudioLandscapes.OpenCue_Worker import dist
 
-config_default = pathlib.Path(__file__).parent.joinpath("config_default.yml")
-
 
 class Branches(enum.StrEnum):
     main = "main"
