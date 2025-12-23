@@ -2,7 +2,7 @@
 
 ***
 
-1. [Feature: OpenStudioLandscapes-Template](#feature-openstudiolandscapes-template)
+1. [Feature: OpenStudioLandscapes-OpenCue-Worker](#feature-openstudiolandscapes-opencue-worker)
    1. [Brief](#brief)
    2. [Configuration](#configuration)
 2. [Create new Feature from this Template](#create-new-feature-from-this-template)
@@ -30,7 +30,7 @@ This `README.md` was dynamically created with [OpenStudioLandscapesUtil-ReadmeGe
 
 ***
 
-# Feature: OpenStudioLandscapes-Template
+# Feature: OpenStudioLandscapes-OpenCue-Worker
 
 ## Brief
 
@@ -63,22 +63,179 @@ A local config store location will be created if it doesn't exist, together with
 > OPENSTUDIOLANDSCAPES__CONFIGSTORE_ROOT="~/.config/OpenStudioLandscapes/my-custom-config-store"
 > ```
 
-The following settings are available in `OpenStudioLandscapes-Template` and are accessible throughout the [`OpenStudioLandscapes-Template`](https://github.com/michimussato/OpenStudioLandscapes-Template/tree/main/OpenStudioLandscapes/Template/config/models.py) package.
+The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` and are accessible throughout the [`OpenStudioLandscapes-OpenCue-Worker`](https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker/tree/main/OpenStudioLandscapes/OpenCue_Worker/config/models.py) package.
 
 ```yaml
-# Base Information
-group_name: "OpenStudioLandscapes_Template"
-key_prefixes:
-  - "OpenStudioLandscapes_Template"
+# ===
+# env
+# ---
+#
+# Type: typing.Dict
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
 
-#compose_scope: "default"
 
-#enabled: false
+# =============
+# config_engine
+# -------------
+#
+# Type: <class 'OpenStudioLandscapes.engine.config.models.ConfigEngine'>
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
 
-#ENV_VAR_PORT_HOST: 1234
-#ENV_VAR_PORT_CONTAINER: 2345
 
-#MOUNTED_VOLUME: "{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/volume"
+# =============
+# config_parent
+# -------------
+#
+# Type: <class 'OpenStudioLandscapes.engine.config.models.FeatureBaseModel'>
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
+
+
+# ============
+# distribution
+# ------------
+#
+# Type: <class 'importlib.metadata.Distribution'>
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
+
+
+# ==========
+# group_name
+# ----------
+#
+# Type: <class 'str'>
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
+
+
+# ============
+# key_prefixes
+# ------------
+#
+# Type: typing.List[str]
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         None
+
+
+# =======
+# enabled
+# -------
+#
+# Type: <class 'bool'>
+# Base Class:
+#     Description:
+#         Whether the Feature is enabled or not.
+#     Default value:
+#         True
+
+
+# =============
+# compose_scope
+# -------------
+#
+# Type: <class 'str'>
+# Base Class:
+#     Description:
+#         None
+#     Default value:
+#         default
+compose_scope: worker
+
+
+# ============
+# feature_name
+# ------------
+#
+# Type: <class 'str'>
+# Base Class:
+#     Description:
+#         The name of the feature. It is derived from the `OpenStudioLandscapes.<Feature>.dist` attribute.
+#     Default value:
+#         PydanticUndefined
+feature_name: OpenStudioLandscapes-OpenCue-Worker
+
+
+# ==============
+# docker_compose
+# --------------
+#
+# Type: <class 'pathlib.Path'>
+# Base Class:
+#     Description:
+#         The path to the `docker-compose.yml` file.
+#     Default value:
+#         {DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml
+
+
+# ==================
+# opencue_rqd_worker
+# ------------------
+#
+# Type: <class 'str'>
+# Sub Class Description:
+#     None
+# Examples:
+#     None
+opencue_rqd_worker: opencue-rqd-worker
+
+
+# ===========================
+# opencue_worker_NUM_SERVICES
+# ---------------------------
+#
+# Type: <class 'int'>
+# Sub Class Description:
+#     Number of workers to simulate in parallel.
+# Examples:
+#     None
+opencue_worker_NUM_SERVICES: 1
+
+
+# ======================
+# opencue_worker_PADDING
+# ----------------------
+#
+# Type: <class 'int'>
+# Sub Class Description:
+#     None
+# Examples:
+#     None
+opencue_worker_PADDING: 3
+
+
+# ======================
+# opencue_worker_storage
+# ----------------------
+#
+# Type: <class 'pathlib.Path'>
+# Sub Class Description:
+#     None
+# Examples:
+#     None
+opencue_worker_storage: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
+
+
 
 ```
 
@@ -233,13 +390,13 @@ Clone this repository into `OpenStudioLandscapes/.features`:
 
 ```shell
 # cd .features
-git clone https://github.com/michimussato/OpenStudioLandscapes-Template.git
+git clone https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git
 ```
 
 Create `venv`:
 
 ```shell
-# cd .features/OpenStudioLandscapes-Template
+# cd .features/OpenStudioLandscapes-OpenCue-Worker
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip setuptools
@@ -248,7 +405,7 @@ python -m pip install --upgrade pip setuptools
 Configure `venv`:
 
 ```shell
-# cd .features/OpenStudioLandscapes-Template
+# cd .features/OpenStudioLandscapes-OpenCue-Worker
 pip install -e "../../[dev]"
 pip install -e ".[dev]"
 ```
@@ -304,7 +461,7 @@ We create the following SBOMs:
 - [`pipdeptree`](https://pypi.org/project/pipdeptree/) (Dot)
 - [`pipdeptree`](https://pypi.org/project/pipdeptree/) (Mermaid)
 
-SBOMs for the different Python interpreters defined in [`.noxfile.VERSIONS`](https://github.com/michimussato/OpenStudioLandscapes-Template/tree/main/noxfile.py) will be created in the [`.sbom`](https://github.com/michimussato/OpenStudioLandscapes-Template/tree/main/.sbom) directory of this repository.
+SBOMs for the different Python interpreters defined in [`.noxfile.VERSIONS`](https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker/tree/main/noxfile.py) will be created in the [`.sbom`](https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker/tree/main/.sbom) directory of this repository.
 
 - `cyclone-dx`
 - `pipdeptree` (Dot)
@@ -316,4 +473,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-19 21:11:37 UTC**
+Last changed: **2025-12-23 12:26:19 UTC**
