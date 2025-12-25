@@ -143,17 +143,18 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 # Type: <class 'str'>
 # Base Class Info:
 #     Required:
-#         False
+#         True
 #     Description:
-#         None
+#         Dagster Group name. This will represent the group node name. See https://docs.dagster.io/api/dagster/assets for more information
 #     Default value:
-#         None
+#         PydanticUndefined
 # Description:
 #     None
 # Required:
 #     False
 # Examples:
 #     None
+group_name: OpenStudioLandscapes_OpenCue_Worker
 
 
 # ============
@@ -163,17 +164,19 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 # Type: typing.List[str]
 # Base Class Info:
 #     Required:
-#         False
+#         True
 #     Description:
-#         None
+#         Dagster Asset key prefixes. This will be reflected in the nesting (directory structure) of the Asset. See https://docs.dagster.io/api/dagster/assets for more information
 #     Default value:
-#         None
+#         PydanticUndefined
 # Description:
 #     None
 # Required:
 #     False
 # Examples:
 #     None
+key_prefixes:
+- OpenStudioLandscapes_OpenCue_Worker
 
 
 # =======
@@ -428,4 +431,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-23 22:40:09 UTC**
+Last changed: **2025-12-25 14:28:35 UTC**
