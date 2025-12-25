@@ -357,6 +357,7 @@ Clone this repository into `OpenStudioLandscapes/.features` (assuming the curren
 
 ```shell
 git -C ./.features clone https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git
+# Check out a specific branch by:
 # git -C ./.features/OpenStudioLandscapes-OpenCue-Worker branch -a
 # git -C ./.features/OpenStudioLandscapes-OpenCue-Worker checkout <branch>
 ```
@@ -435,4 +436,4 @@ Currently, the following Python interpreters are enabled for testing:
 
 ***
 
-Last changed: **2025-12-25 19:45:21 UTC**
+Last changed: **2025-12-25 20:47:51 UTC**
