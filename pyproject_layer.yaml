@@ -1,25 +1,25 @@
 project:
   # dependencies: []
-  description: Template Feature for OpenStudioLandscapes
-  name: OpenStudioLandscapes-Template
+  description: OpenCue-Worker Feature for OpenStudioLandscapes
+  name: OpenStudioLandscapes-OpenCue-Worker
   optional-dependencies:
     dev:
-    - OpenStudioLandscapes-Template[testing]
-    - OpenStudioLandscapes-Template[lint]
-    - OpenStudioLandscapes-Template[nox]
-    - OpenStudioLandscapes-Template[sbom]
-    - OpenStudioLandscapes-Template[coverage]
-    - OpenStudioLandscapes-Template[readme]
+    - OpenStudioLandscapes-OpenCue-Worker[testing]
+    - OpenStudioLandscapes-OpenCue-Worker[lint]
+    - OpenStudioLandscapes-OpenCue-Worker[nox]
+    - OpenStudioLandscapes-OpenCue-Worker[sbom]
+    - OpenStudioLandscapes-OpenCue-Worker[coverage]
+    - OpenStudioLandscapes-OpenCue-Worker[readme]
     nox:
-    - OpenStudioLandscapes-Template[testing]
+    - OpenStudioLandscapes-OpenCue-Worker[testing]
     sbom:
-    - OpenStudioLandscapes-Template[graphviz]
+    - OpenStudioLandscapes-OpenCue-Worker[graphviz]
   urls:
-    Homepage: https://github.com/michimussato/OpenStudioLandscapes-Template
+    Homepage: https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker
 tool:
   dagster:
-    code_location_name: OpenStudioLandscapes-Template
-    module_name: OpenStudioLandscapes.Template.definitions
+    code_location_name: OpenStudioLandscapes-OpenCue-Worker
+    module_name: OpenStudioLandscapes.OpenCue_Worker.definitions
   setuptools:
     packages:
-    - OpenStudioLandscapes.Template
+    - OpenStudioLandscapes.OpenCue_Worker
