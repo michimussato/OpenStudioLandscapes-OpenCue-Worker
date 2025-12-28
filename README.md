@@ -7,7 +7,8 @@
    2. [Install](#install)
    3. [Configure](#configure)
       1. [Default Configuration](#default-configuration)
-2. [Community](#community)
+2. [External Resources](#external-resources)
+3. [Community](#community)
 
 ***
 
@@ -351,6 +352,14 @@ opencue_worker_storage: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
 
 ***
 
+# External Resources
+
+[![Logo OpenCue ](https://docs.opencue.io/assets/images/opencue_logo_with_text.png)](https://www.opencue.io/)
+
+For more information about this Feature, visit the main resource:
+
+- [OpenStudioLandscapes-OpenCue](https://github.com/michimussato/OpenStudioLandscapes-OpenCue)
+
 ***
 
 # Community
@@ -374,4 +383,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2025-12-26 13:35:02 UTC**
+Last changed: **2025-12-28 10:38:56 UTC**

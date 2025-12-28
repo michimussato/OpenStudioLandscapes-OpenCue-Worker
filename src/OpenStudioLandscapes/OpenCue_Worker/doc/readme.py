@@ -10,34 +10,39 @@ def readme_feature(
 
     # Some Specific information
 
-    # doc.add_heading(
-    #     text=main_header,
-    #     level=1,
-    # )
+    doc.add_heading(
+        text=main_header,
+        level=1,
+    )
 
     # Logo
 
-    # doc.add_paragraph(
-    #     snakemd.Inline(
-    #         text=textwrap.dedent(
-    #             """\
-    #             Logo Template\
-    #             """
-    #         ),
-    #         image={
-    #             "Template": "https://www.url.com/yourlogo.png",
-    #         }["Template"],
-    #         link="https://www.url.com",
-    #     ).__str__()
-    # )
-    #
-    # doc.add_paragraph(
-    #     text=textwrap.dedent(
-    #         """\
-    #         Official Template information.\
-    #         """
-    #     )
-    # )
+    doc.add_paragraph(
+        snakemd.Inline(
+            text=textwrap.dedent(
+                """\
+                Logo OpenCue\
+                """
+            ),
+            image="https://docs.opencue.io/assets/images/opencue_logo_with_text.png",
+            link="https://www.opencue.io/",
+        ).__str__()
+    )
+
+    doc.add_paragraph(
+        text=textwrap.dedent(
+            """\
+            For more information about this Feature, visit the
+            main resource:\
+            """
+        )
+    )
+
+    doc.add_unordered_list(
+        [
+            "[OpenStudioLandscapes-OpenCue](https://github.com/michimussato/OpenStudioLandscapes-OpenCue)",
+        ]
+    )
 
     doc.add_horizontal_rule()
 
