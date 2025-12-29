@@ -1,6 +1,7 @@
 project:
-  # dependencies: []
-  description: OpenCue-Worker Feature for OpenStudioLandscapes
+  dependencies:
+  - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue
+  description: 'OpenCue-Worker Feature for OpenStudioLandscapes (dep: OpenStudioLandscapes-OpenCue)'
   name: OpenStudioLandscapes-OpenCue-Worker
   optional-dependencies:
     dev:
@@ -10,10 +11,16 @@ project:
     - OpenStudioLandscapes-OpenCue-Worker[sbom]
     - OpenStudioLandscapes-OpenCue-Worker[coverage]
     - OpenStudioLandscapes-OpenCue-Worker[readme]
+    # lint:
+    # - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
     nox:
     - OpenStudioLandscapes-OpenCue-Worker[testing]
+    # - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
+    # readme:
+    # - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
     sbom:
     - OpenStudioLandscapes-OpenCue-Worker[graphviz]
+    # - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
   urls:
     Homepage: https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker
 tool:
