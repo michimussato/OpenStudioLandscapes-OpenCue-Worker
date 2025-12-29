@@ -4,7 +4,7 @@ import pathlib
 import shutil
 import textwrap
 import urllib.parse
-from typing import Dict, Generator, List, Union, Any
+from typing import Any, Dict, Generator, List, Union
 
 import yaml
 from dagster import (
@@ -34,15 +34,15 @@ from OpenStudioLandscapes.engine.enums import *
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
-from OpenStudioLandscapes.OpenCue_Worker import dist
-from OpenStudioLandscapes.OpenCue_Worker.config.models import CONFIG_STR, Config
-from OpenStudioLandscapes.OpenCue_Worker.constants import *
-
 # Override default ConfigParent
 from OpenStudioLandscapes.OpenCue.config.models import Config as ConfigParent
 from OpenStudioLandscapes.OpenCue.constants import (
     ASSET_HEADER as ASSET_HEADER_FEATURE_IN,
 )
+
+from OpenStudioLandscapes.OpenCue_Worker import dist
+from OpenStudioLandscapes.OpenCue_Worker.config.models import CONFIG_STR, Config
+from OpenStudioLandscapes.OpenCue_Worker.constants import *
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
 yaml.SafeDumper.add_multi_representer(
@@ -179,7 +179,7 @@ def compose_networks(
               - /tmp/rqd/shots:/tmp/rqd/shots
         ```
         """
-    )
+    ),
 )
 def compose_rqd_worker(
     context: AssetExecutionContext,
@@ -198,7 +198,9 @@ def compose_rqd_worker(
     docker_dict = {"services": {}}
 
     for i in range(CONFIG.opencue_worker_NUM_SERVICES):
-        service_name = f"{service_name_base}-{str(i+1).zfill(CONFIG.opencue_worker_PADDING)}"
+        service_name = (
+            f"{service_name_base}-{str(i+1).zfill(CONFIG.opencue_worker_PADDING)}"
+        )
         container_name, _ = get_docker_compose_names(
             context=context,
             service_name=service_name,
@@ -210,7 +212,9 @@ def compose_rqd_worker(
         ports_dict = {}
 
         if "networks" in compose_networks:
-            network_dict = {"networks": list(compose_networks.get("networks", {}).keys())}
+            network_dict = {
+                "networks": list(compose_networks.get("networks", {}).keys())
+            }
             ports_dict = {"ports": []}
         elif "network_mode" in compose_networks:
             network_dict = {"network_mode": compose_networks["network_mode"]}
@@ -221,10 +225,7 @@ def compose_rqd_worker(
             service_name
         )
 
-        rqd_conf = storage.joinpath(
-            "conf",
-            "rqd.conf"
-        )
+        rqd_conf = storage.joinpath("conf", "rqd.conf")
 
         rqd_conf.parent.mkdir(parents=True, exist_ok=True)
 
@@ -492,4 +493,3 @@ def cmd_append(
             "__".join(context.asset_key.path): MetadataValue.json(ret),
         },
     )
-
