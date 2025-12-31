@@ -427,8 +427,6 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     # https://www.snakemd.io/en/latest/
     ##################################################
 
-    # doc.add_horizontal_rule()
-
     return doc
 
 
@@ -531,7 +529,7 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Commit all changes to Git:\
+            Rename the package directory from `Template` to `NewFeature`:\
             """
         )
     )
@@ -539,10 +537,10 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_code(
         code=textwrap.dedent(
             """\
-            cd /to/your/git/repos/OpenStudioLandscapes
-            source .venv/bin/activate
-            pip install --editable .features/OpenStudioLandscapes-${NEW_FEATURE}[dev]
-            pip install --editable .[dev]\
+            NEW_FEATURE="NewFeature"
+
+            cd /to/your/git/repos/OpenStudioLandscapes/.features/OpenStudioLandscapes-${NEW_FEATURE}
+            mv src/OpenStudioLandscapes/Template src/OpenStudioLandscapes/${NEW_FEATURE}\
 """
         )
     )
@@ -550,8 +548,8 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Edit the `OpenStudioLandscapes.engine` to use
-            your new Feature:\
+            Rename all occurrences of `template` in your new Feature with
+            the correct name in the following files:\
             """
         )
     )
@@ -585,31 +583,6 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Clone the new Feature into the `.features` directory of your local
-            `OpenStudioLandscapes` clone:\
-            """
-        )
-    )
-
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
-            cd /to/your/git/repos/OpenStudioLandscapes/.features
-            git clone <GIT_REPOSITORY_URL>\
-"""
-        )
-    )
-
-    doc.add_heading( (duplicate-code)
-src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
-==OpenStudioLandscapes.OpenCue_Worker.readme_feature:[194:216]
-==OpenStudioLandscapes.Template.readme_feature:[109:131]
-        level=2,
-    )
-
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
             Commit all changes to Git:\
             """
         )
@@ -627,6 +600,31 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 
     doc.add_heading( (duplicate-code)
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
+==OpenStudioLandscapes.OpenCue_Worker.readme_feature:[194:216]
+==OpenStudioLandscapes.Template.readme_feature:[109:131]
+        level=2,
+    )
+
+    doc.add_paragraph(
+        text=textwrap.dedent(
+            """\
+            Clone the new Feature into the `.features` directory of your local
+            `OpenStudioLandscapes` clone:\
+            """
+        )
+    )
+
+    doc.add_code(
+        code=textwrap.dedent(
+            """\
+            cd /to/your/git/repos/OpenStudioLandscapes/.features
+            git clone <GIT_REPOSITORY_URL>\
+"""
+        )
+    )
+
+    doc.add_heading( (duplicate-code)
+src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.readme_feature:[109:130]
 ==OpenStudioLandscapes.Template.readme_feature:[132:154]
         level=2,
@@ -635,7 +633,8 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            Rename the package directory from `Template` to `NewFeature`:\
+            Clone the new Feature into the `.features` directory of your local
+            `OpenStudioLandscapes` clone:\
             """
         )
     )
@@ -643,10 +642,8 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_code(
         code=textwrap.dedent(
             """\
-            NEW_FEATURE="NewFeature"
-
-            cd /to/your/git/repos/OpenStudioLandscapes/.features/OpenStudioLandscapes-${NEW_FEATURE}
-            mv src/OpenStudioLandscapes/Template src/OpenStudioLandscapes/${NEW_FEATURE}\
+            cd /to/your/git/repos/OpenStudioLandscapes/.features
+            git clone <GIT_REPOSITORY_URL>\
 """
         )
     )
@@ -727,17 +724,17 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[279:290]
 ==OpenStudioLandscapes.Template.assets:[310:321]
-            path_dst=pathlib.Path(host),
-            path_common_root=pathlib.Path(env["DOT_LANDSCAPES"]),
-        )
+                path_dst=pathlib.Path(host),
+                path_common_root=pathlib.Path(env["DOT_LANDSCAPES"]),
+            )
 
-        _volume_relative.append(
-            f"{volume_dir_host_rel_path.as_posix()}:{container}",
-        )
+            _volume_relative.append(
+                f"{volume_dir_host_rel_path.as_posix()}:{container}",
+            )
 
-    volumes_dict = {
-        "volumes": [
-            *_volume_relative, (duplicate-code)
+        volumes_dict = {
+            "volumes": [
+                *_volume_relative, (duplicate-code)
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.readme_feature:[64:81]
 ==OpenStudioLandscapes.Template.readme_feature:[84:102]
@@ -766,8 +763,7 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     doc.add_paragraph(
         text=textwrap.dedent(
             """\
-            And fill in information as needed by specifying the `Repository name *`
-            of the OpenStudioLandscapes Feature (i.e. `OpenStudioLandscapes-NewFeature`):\
+            Click `Use this template` and select `Create a new repository`\
             """
         )
     )
@@ -782,7 +778,7 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[325:335]
 ==OpenStudioLandscapes.Template.assets:[241:251]
-    )
+        )
 
     docker_yaml = yaml.dump(docker_dict)
 
@@ -809,9 +805,9 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
     **ASSET_HEADER,
     ins={},
 )
-def cmd_append(
+def cmd_extend(
     context: AssetExecutionContext,
-) -> Generator[Output[dict[str, list[Any]]] | AssetMaterialization | Any, Any, None]:
+) -> Generator[Output[List[Any]] | AssetMaterialization | Any, Any, None]:
  (duplicate-code)
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[379:410]
@@ -828,11 +824,24 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 
 @asset(
     **ASSET_HEADER,
-    ins={},
+    ins={
+        "CONFIG": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
+        ),
+        # "CONFIG_PARENT": AssetIn(
+        #     AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG_PARENT"]),
+        # ),
+        "compose": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose"]),
+        ),
+    },
 )
-def cmd_extend(
+def cmd_append(
     context: AssetExecutionContext,
-) -> Generator[Output[list[Any]] | AssetMaterialization | Any, Any, None]:
+    CONFIG: Config,  # pylint: disable=redefined-outer-name
+    # CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
+    compose: Dict,  # pylint: disable=redefined-outer-name,
+) -> Generator[Output[Dict[str, List[Any]]] | AssetMaterialization | Any, Any, None]:
  (duplicate-code)
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[487:495]
@@ -848,12 +857,12 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[243:249]
 ==OpenStudioLandscapes.Template.assets:[175:181]
-        ).format(
-            auto_generated=f"AUTO-GENERATED by Dagster Asset {'__'.join(context.asset_key.path)}",
-            dagster_url=urllib.parse.quote(
-                f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
-                safe=":/%",
-            ), (duplicate-code)
+    ).format(
+        auto_generated=f"AUTO-GENERATED by Dagster Asset {'__'.join(context.asset_key.path)}",
+        dagster_url=urllib.parse.quote(
+            f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
+            safe=":/%",
+        ), (duplicate-code)
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[130:138]
 ==OpenStudioLandscapes.Template.assets:[366:374]
@@ -868,18 +877,18 @@ src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 fil
 src/OpenStudioLandscapes/Template/__init__.py:1:0: R0801: Similar lines in 2 files
 ==OpenStudioLandscapes.OpenCue_Worker.assets:[266:278]
 ==OpenStudioLandscapes.Template.assets:[297:309]
-        }
+    }
 
-        # For portability, convert absolute volume paths to relative paths
+    # For portability, convert absolute volume paths to relative paths
 
-        _volume_relative = []
+    _volume_relative = []
 
-        for v in volumes_dict["volumes"]:
+    for v in volumes_dict["volumes"]:
 
-            host, container = v.split(":", maxsplit=1)
+        host, container = v.split(":", maxsplit=1)
 
-            volume_dir_host_rel_path = get_relative_path_via_common_root(
-                context=context, (duplicate-code)
+        volume_dir_host_rel_path = get_relative_path_via_common_root(
+            context=context, (duplicate-code)
 
 ------------------------------------------------------------------
 Your code has been rated at 4.47/10 (previous run: 6.91/10, -2.44)
