@@ -57,7 +57,8 @@ yaml.SafeDumper.add_multi_representer(
 )
 
 
-# compose_scope_group__cmd: AssetsDefinition = get_compose_scope_group__cmd(
+# Overridden locally
+# cmd: AssetsDefinition = get_feature__cmd(
 #     ASSET_HEADER=ASSET_HEADER,
 # )
 
@@ -393,9 +394,6 @@ def cmd_extend(
         "CONFIG": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
-        # "CONFIG_PARENT": AssetIn(
-        #     AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG_PARENT"]),
-        # ),
         "compose": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose"]),
         ),
@@ -404,7 +402,6 @@ def cmd_extend(
 def cmd_append(
     context: AssetExecutionContext,
     CONFIG: Config,  # pylint: disable=redefined-outer-name
-    # CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose: Dict,  # pylint: disable=redefined-outer-name,
 ) -> Generator[Output[Dict[str, List[Any]]] | AssetMaterialization | Any, Any, None]:
 
