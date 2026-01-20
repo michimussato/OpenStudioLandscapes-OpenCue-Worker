@@ -448,6 +448,7 @@ def cmd_append(
 
         cmd_docker_compose_set_dynamic_hostname_worker = [
             shutil.which("sudo"),
+            "--stdin",
             shutil.which("nsenter"),
             "--target",
             target_worker,
