@@ -28,9 +28,11 @@ from OpenStudioLandscapes.engine.common_assets.group_in import (
     get_feature_in_parent,
 )
 from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
-from OpenStudioLandscapes.engine.config.models import ConfigEngine
+from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
+from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
+from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_policy
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
@@ -121,6 +123,60 @@ def compose_networks(
 
     env: Dict = CONFIG.env
 
+    # Possible overrides:
+    # https://github.com/AcademySoftwareFoundation/OpenCue/blob/master/rqd/rqd/rqconstants.py
+    # rqd does weird things in order to get the hostname
+    # https://github.com/AcademySoftwareFoundation/OpenCue/blob/ce61412b723c4020a6676842e175a228b3026daa/rqd/rqd/rqutil.py#L207
+    # In HOST mode, it resolves to the hostname of the host instead
+    # of the container
+    # HOST is therefore a bad idea
+    #
+    # [root@lenovo-opencue-rqd-worker opencue]# cat /etc/hostname
+    # eb48b21e945e
+    # [root@lenovo-opencue-rqd-worker opencue]# hostname
+    # lenovo-opencue-rqd-worker
+    # [root@lenovo-opencue-rqd-worker opencue]# echo $HOSTNAME  # I set this manually
+    # lenovo-worker.opencue-rqd-worker.2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite
+    # [root@lenovo-opencue-rqd-worker opencue]# python3
+    # Python 3.9.20 (main, Aug 29 2025, 17:46:29)
+    # [GCC 8.5.0 20210514 (Red Hat 8.5.0-28)] on linux
+    # Type "help", "copyright", "credits" or "license" for more information.
+    # >>> from rqd.rqutil import getHostname
+    # WARNING:root:Loading config /etc/opencue/rqd.conf
+    # WARNING:root:CUEBOT_HOSTNAME: opencue-cuebot.openstudiolandscapes.lan
+    # >>> getHostname()
+    # 'eb48b21e945e'
+    #
+    # Furthermore:
+    # OVERRIDE_HOSTNAME=hello-world.worker.opencue-rqd-worker.2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite
+    # results in hostname = hello-world
+    # With override:
+    # [root@lenovo-opencue-rqd-worker opencue]# python3
+    # Python 3.9.20 (main, Aug 29 2025, 17:46:29)
+    # [GCC 8.5.0 20210514 (Red Hat 8.5.0-28)] on linux
+    # Type "help", "copyright", "credits" or "license" for more information.
+    # >>> from rqd.rqutil import getHostname
+    # WARNING:root:Loading config /etc/opencue/rqd.conf
+    # WARNING:root:CUEBOT_HOSTNAME: opencue-cuebot.openstudiolandscapes.lan
+    # >>> getHostname()
+    # 'hello-world-worker.opencue-rqd-worker.2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite'
+    #
+    # So: OVERRIDE_HOSTNAME must not contain periods (splitting). Period.
+    #
+    # However: respect max segment length!
+    # 45 chars is the hard limit it seems
+    # if longer, the worker will just not show up in CueGUI
+    #
+    # [root@lenovo-opencue-rqd-worker opencue]# python3
+    # Python 3.9.20 (main, Aug 29 2025, 17:46:29)
+    # [GCC 8.5.0 20210514 (Red Hat 8.5.0-28)] on linux
+    # Type "help", "copyright", "credits" or "license" for more information.
+    # >>> from rqd.rqutil import getHostname
+    # WARNING:root:Loading config /etc/opencue/rqd.conf
+    # WARNING:root:CUEBOT_HOSTNAME: opencue-cuebot.openstudiolandscapes.lan
+    # >>> getHostname()
+    # 'hello-world-worker-opencue-rqd-worker-2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite'
+
     compose_network_mode = DockerComposePolicies.NETWORK_MODE.HOST
 
     docker_dict = get_network_dicts(
@@ -146,6 +202,177 @@ def compose_networks(
 @asset(
     **ASSET_HEADER,
     ins={
+        "feature_in": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
+        ),
+        "CONFIG": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
+        ),
+    },
+    retry_policy=build_docker_image_retry_policy,
+)
+def build_docker_image(
+    context: AssetExecutionContext,
+    feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
+    CONFIG: Config,  # pylint: disable=redefined-outer-name
+) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
+    """ """
+
+    env: Dict = CONFIG.env
+
+    docker_config_json: pathlib.Path = (
+        feature_in.openstudiolandscapes_base.docker_config_json
+    )
+
+    config_engine: ConfigEngine = CONFIG.config_engine
+
+    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
+
+    docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
+    context.log.debug(f"{docker_image = }")
+    # docker_image = {'image_name': 'openstudiolandscapes_base_build_docker_image', 'image_prefixes': '', 'image_tags': ['2025-11-17-01-26-31-05a9b85aa33b47ffa7dfb21a28ca24ab'], 'image_parent': {}}
+
+    docker_file = pathlib.Path(
+        env["DOT_LANDSCAPES"],
+        env.get("LANDSCAPE", "default"),
+        f"{dist.name}",
+        "__".join(context.asset_key.path),
+        "Dockerfiles",
+        "Dockerfile",
+    )
+
+    docker_file.parent.mkdir(parents=True, exist_ok=True)
+
+    #################################################
+
+    (
+        image_name,
+        image_prefixes,
+        tags,
+        build_base_parent_image_prefix,
+        build_base_parent_image_name,
+        build_base_parent_image_tags,
+    ) = get_image_metadata(
+        context=context,
+        docker_image=docker_image,
+        docker_config=docker_config,
+        env=env,
+    )
+
+    #################################################
+
+    # @formatter:off
+    hosts_sh = {
+        # "AWSPortalLink.run": CONFIG.deadline_10_2_installer_aws_portal_link_expanded,
+        "hosts.sh": CONFIG.rqd_hosts_sh_expanded,
+        # "DeadlineRepository.run": CONFIG.deadline_10_2_installer_deadline_repository_expanded,
+    }
+    # @formatter:on
+
+    payload = docker_file.parent / "payload"
+    payload.mkdir(parents=True, exist_ok=True)
+
+    copy_str: str = get_copy_str(
+        temp_dir=payload,
+        copy_packages=hosts_sh,
+        mode=755,
+    )
+
+    # apt_install_str: str = get_apt_install_str(
+    #     apt_install_packages=CONFIG.apt_packages,
+    # )
+    #
+    # pip_install_str: str = get_pip_install_str(
+    #     pip_install_packages=CONFIG.pip_packages,
+    # )
+
+    # @formatter:off
+    docker_file_str = textwrap.dedent(
+        """\
+        # {auto_generated}
+        # {dagster_url}
+        FROM {parent_image} AS {image_name}
+        LABEL authors="{AUTHOR}"
+        
+        SHELL ["/bin/bash", "-c"]
+        
+        WORKDIR /
+
+        {copy_str}
+        
+        WORKDIR /opt/opencue
+        
+        # Default ENTRYPOINT of {parent_image} is
+        # ENTRYPOINT set -e && rqd
+        # Now the /hosts.sh part is a big hack to be able
+        # (at least to some extent) to control the hostname
+        # of rqd on the target machine. OpenCue is pretty 
+        # messed up in terms of applying the hostname itself
+        # to rqd and how it's displayed in CueCommander.
+        # We modify the default image here and mess with 
+        # /etc/hosts file.
+        ENTRYPOINT set -e && /hosts.sh && rqd
+        CMD []
+        """
+    ).format(
+        copy_str=copy_str,
+        auto_generated=f"AUTO-GENERATED by Dagster Asset {'__'.join(context.asset_key.path)}",
+        dagster_url=urllib.parse.quote(
+            f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
+            safe=":/%",
+        ),
+        image_name=image_name,
+        # Todo: this won't work as expected if len(tags) > 1
+        parent_image="docker.io/opencue/rqd",
+        **env,
+    )
+    # @formatter:on
+
+    with open(docker_file, "w") as fw:
+        fw.write(docker_file_str)
+
+    with open(docker_file, "r") as fr:
+        docker_file_content = fr.read()
+
+    # Copy Deadline Installer(s) to build context
+    for key, value in hosts_sh.items():
+        if not value.exists():
+            context.log.error(f"File {value.as_posix()} does not exist")
+        context.log.debug(f"{value = }")
+        context.log.debug(f"{payload / key = }")
+        shutil.copyfile(
+            src=value,
+            dst=payload / key,
+        )
+
+    #################################################
+
+    image_data, logs = create_image(
+        context=context,
+        image_name=image_name,
+        image_prefixes=image_prefixes,
+        tags=tags,
+        docker_image=docker_image,
+        docker_config=docker_config,
+        docker_config_json=docker_config_json,
+        docker_file=docker_file,
+    )
+
+    yield Output(image_data)
+
+    yield AssetMaterialization(
+        asset_key=context.asset_key,
+        metadata={
+            "__".join(context.asset_key.path): MetadataValue.json(image_data),
+            "docker_file": MetadataValue.md(f"```yaml\n{docker_file_content}\n```"),
+            "logs": MetadataValue.json(logs),
+        },
+    )
+
+
+@asset(
+    **ASSET_HEADER,
+    ins={
         "CONFIG": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
@@ -154,6 +381,9 @@ def compose_networks(
         ),
         "compose_networks": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
+        ),
+        "build": AssetIn(
+            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
         ),
     },
     description=textwrap.dedent(
@@ -187,6 +417,7 @@ def compose_rqd_worker(
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
+    build: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
@@ -199,9 +430,18 @@ def compose_rqd_worker(
     docker_dict = {"services": {}}
 
     for i in range(CONFIG.opencue_worker_NUM_SERVICES):
-        service_name = (
-            f"{service_name_base}-{str(i+1).zfill(CONFIG.opencue_worker_PADDING)}"
-        )
+
+        if CONFIG.opencue_worker_NUM_SERVICES == 1:
+            # Ignore incrementation
+            service_name = (
+                f"{service_name_base}"
+            )
+
+        else:
+            service_name = (
+                f"{service_name_base}-{str(i+1).zfill(CONFIG.opencue_worker_PADDING)}"
+            )
+
         container_name, _ = get_docker_compose_names(
             context=context,
             service_name=service_name,
@@ -240,7 +480,7 @@ def compose_rqd_worker(
             [Override]
             USE_NIMBY_PYNPUT=false
             RQD_USE_IP_AS_HOSTNAME=false
-            OVERRIDE_HOSTNAME={hostname}
+            # OVERRIDE_HOSTNAME={hostname}
             """
         ).format(
             auto_generated=f"AUTO-GENERATED by Dagster Asset {'__'.join(context.asset_key.path)}",
@@ -248,7 +488,7 @@ def compose_rqd_worker(
                 f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
                 safe=":/%",
             ),
-            hostname=service_name,
+            hostname=f"{CONFIG.compose_scope}.{container_name}",
         )
         # @formatter:on
 
@@ -303,7 +543,13 @@ def compose_rqd_worker(
         docker_dict["services"].update(
             {
                 service_name: {
-                    "image": "docker.io/opencue/rqd",
+                    # "image": "docker.io/opencue/rqd",
+                    "image": "%s%s:%s"
+                    % (
+                        build["image_prefixes"],
+                        build["image_name"],
+                        build["image_tags"][0],
+                    ),
                     "container_name": container_name,
                     # To have a unique, dynamic hostname, we simply must not
                     # specify it.
@@ -318,6 +564,7 @@ def compose_rqd_worker(
                         #  - [ ] use fqdn instead of just hostname?
                         # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqconstants.py
                         "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
+                        "HOSTNAME": "${HOSTNAME}${HOSTNAME:+-}%s-%s" % (CONFIG.compose_scope, container_name),
                     },
                     **copy.deepcopy(volumes_dict),
                     **copy.deepcopy(network_dict),
@@ -335,8 +582,8 @@ def compose_rqd_worker(
         metadata={
             "__".join(context.asset_key.path): MetadataValue.json(docker_dict),
             "docker_yaml": MetadataValue.md(f"```yaml\n{docker_yaml}\n```"),
-            # "rqd_conf": MetadataValue.path(rqd_conf),
-            # "rqd_conf_str": MetadataValue.md(f"```\n{rqd_conf_str}\n```"),
+            "rqd_conf": MetadataValue.path(rqd_conf),
+            "rqd_conf_str": MetadataValue.md(f"```ini\n{rqd_conf_str}\n```"),
         },
     )
 
@@ -429,26 +676,100 @@ def cmd_append(
     # - deadline-10-2-worker-001...nnn
     # - deadline-10-2-pulse-worker-001...nnn
     # into
-    # - $(hostname)-deadline-10-2-worker-001...nnn
-    # - $(hostname)-deadline-10-2-pulse-worker-001...nnn
+    # - ${HOSTNAME}-deadline-10-2-worker-001...nnn
+    # - ${HOSTNAME}-deadline-10-2-pulse-worker-001...nnn
+    #
+    # We do this because the this worker might be running on
+    # a machine which hostname we don't know at build time
+    # so the machine name needs to be extracted and forwarded
+    # to the Docker container.
+    # Note: $HOSTNAME is not defined (at least on some OSs)
+    # so we have to set it in the "up"-scripts
+    #
+    #
+    # Set /etc/hostname manually
+    # /usr/bin/sudo --stdin /usr/bin/nsenter --target "$($(which docker) inspect -f '{{ .State.Pid }}' opencue-rqd-worker.2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite)" --uts --mount bash -c "echo 'Hello-World' | tee /etc/hostname"
+    # has no effect
+    # because of this stupid OpenCue implementation:
+    # [root@lenovo-opencue-rqd-worker opencue]# cat /etc/hostname
+    # new_host
+    # [root@lenovo-opencue-rqd-worker opencue]# echo $HOSTNAME
+    # lenovo-worker.opencue-rqd-worker.2026-01-20_00-42-28__clumsy-peaceful-volcano-sprite
+    # [root@lenovo-opencue-rqd-worker opencue]# python3
+    # Python 3.9.20 (main, Aug 29 2025, 17:46:29)
+    # [GCC 8.5.0 20210514 (Red Hat 8.5.0-28)] on linux
+    # Type "help", "copyright", "credits" or "license" for more information.
+    # >>> import socket
+    # >>> socket.gethostbyname(socket.gethostname())
+    # '192.168.80.2'
+    # >>> socket.gethostname()
+    # 'lenovo-opencue-rqd-worker'
+    # >>> from rqd.rqutil import getHostname, getHostIp
+    # WARNING:root:Loading config /etc/opencue/rqd.conf
+    # WARNING:root:CUEBOT_HOSTNAME: opencue-cuebot.openstudiolandscapes.lan
+    # >>> getHostname()
+    # '717405c8ec22'
+    # >>> socket.gethostbyaddr(getHostIp())
+    # ('717405c8ec22.openstudiolandscapes.lan', ['717405c8ec22'], ['192.168.80.2'])
+    # >>> socket.getfqdn()
+    # '717405c8ec22.openstudiolandscapes.lan'
+    # [root@lenovo-opencue-rqd-worker opencue]# cat /etc/hosts
+    # 127.0.0.1       localhost
+    # ::1     localhost ip6-localhost ip6-loopback
+    # fe00::  ip6-localnet
+    # ff00::  ip6-mcastprefix
+    # ff02::1 ip6-allnodes
+    # ff02::2 ip6-allrouters
+    # 192.168.80.2    717405c8ec22.openstudiolandscapes.lan 717405c8ec22
+    # [root@lenovo-opencue-rqd-worker opencue]#
+    #
+    # Only Option:
+    # edit /etc/hosts file
+    #
+    # [root@lenovo-opencue-rqd-worker opencue]# cat /etc/hosts
+    # 127.0.0.1       localhost
+    # ::1     localhost ip6-localhost ip6-loopback
+    # fe00::  ip6-localnet
+    # ff00::  ip6-mcastprefix
+    # ff02::1 ip6-allnodes
+    # ff02::2 ip6-allrouters
+    # 192.168.80.2    my-new-host
+    # [root@lenovo-opencue-rqd-worker opencue]# python3
+    # Python 3.9.20 (main, Aug 29 2025, 17:46:29)
+    # [GCC 8.5.0 20210514 (Red Hat 8.5.0-28)] on linux
+    # Type "help", "copyright", "credits" or "license" for more information.
+    # >>> import socket
+    # >>> socket.gethostbyname(socket.gethostname())
+    # '192.168.80.2'
+    # >>> from rqd.rqutil import getHostname, getHostIp
+    # WARNING:root:Loading config /etc/opencue/rqd.conf
+    # WARNING:root:CUEBOT_HOSTNAME: opencue-cuebot.openstudiolandscapes.lan
+    # >>> getHostname()
+    # 'my-new-host'
+    # >>> socket.gethostbyaddr(getHostIp())
+    # ('my-new-host', [], ['192.168.80.2'])
     for service_name in compose_services:
 
         target_worker = (
-            "$($(which docker) inspect -f '{{ .State.Pid }}' %s)"
+            "\"$($(which docker) inspect --format '{{ .State.Pid }}' %s)\""
             % ".".join([service_name, env.get("LANDSCAPE", "default")])
         )
-        hostname_worker = f"$(hostname)-{service_name}"
+        hostname_worker = f"${{HOSTNAME}}-{service_name}"
+
+        # hostname_worker_truncated = hostname_worker.replace(".", "_")[:45]
 
         exclude_from_quote.extend(
             [
                 target_worker,
                 hostname_worker,
+                # hostname_worker_truncated,
             ]
         )
 
         cmd_docker_compose_set_dynamic_hostname_worker = [
             shutil.which("sudo"),
             "--stdin",
+            # https://man7.org/linux/man-pages/man1/nsenter.1.html
             shutil.which("nsenter"),
             "--target",
             target_worker,
@@ -456,6 +777,65 @@ def cmd_append(
             "hostname",
             hostname_worker,
         ]
+
+        # get last line:
+        # - tail -n 1 /etc/hosts
+        # - sed -n '$p' /etc/hosts
+        # sed "s/$(printf '\t')/'\tmynewhost'/g" /etc/hosts
+        #  tail -n 1 /etc/hosts | sed "s/$(printf '\t')/\t${HOSTNAME}/g"
+        #  tail -n 1 /etc/hosts | sed "s/^$(printf '\t')/'\t${HOSTNAME}'/g"
+        # tail -n 1 /etc/hosts | sed "s/\t.*/\t${HOSTNAME}/g"
+
+        # https://collectingwisdom.com/sed-replace-last-line-matching-pattern/
+        # tac points.txt | sed '/Mavs/ {s//Lakers/; :loop; n; b loop}' | tac
+
+        # tac /etc/hosts | sed "0,/\t.*/{s/\t.*/\t${HOSTNAME}/g}"
+        #                      '         s/\(.*\)-/\1 /'
+        # tac /etc/hosts | sed "0,/\t.*/{s/\t.*/\t${HOSTNAME}/g}" | tac > /etc/hosts
+        # tac original.txt > temp.txt && mv temp.txt original.txt
+        # tac /etc/hosts > /etc/.hosts && cat /etc/.hosts | sed "0,/\t.*/{s/\t.*/\t${HOSTNAME}/g}" | tac > /etc/hosts
+
+        # truncate /etc/hosts
+        # https://stackoverflow.com/questions/45125826/delete-everything-after-a-certain-line-in-bash
+        # truncate -s `head -6 /etc/hosts | wc -c` /etc/hosts
+        # truncate -s $(head -6 /etc/hosts | wc -c) /etc/hosts
+        # str_truncate_etc_hosts = "\"truncate -s $(head -5 /etc/hosts | wc -c) /etc/hosts\""
+        # tac /etc/hosts > /etc/.hosts && cat /etc/.hosts | sed "0,/\t.*/{s/\t.*/\t${HOSTNAME}/g}" | tac > /etc/hosts
+        # str_truncate_etc_hosts = "tac /etc/hosts > /etc/.hosts && cat /etc/.hosts | sed \"0,/\\t.*/{s/\\t.*/\\t$(hostname -f)/g}\" | tac > /etc/hosts"
+        #
+        # cmd_docker_compose_truncate_etc_hosts = [
+        #     shutil.which("sudo"),
+        #     "--stdin",
+        #     # https://man7.org/linux/man-pages/man1/nsenter.1.html
+        #     shutil.which("nsenter"),
+        #     "--target",
+        #     target_worker,
+        #     "--uts",
+        #     "--mount",
+        #     # "env",
+        #     "bash",
+        #     "-c",
+        #     str_truncate_etc_hosts,
+        #     # hostname_worker,
+        # ]
+
+        # str_set_etc_hostname = "\"echo %s | tee /etc/hostname\"" % hostname_worker
+        #
+        # cmd_docker_compose_set_dynamic_etc_hostname_worker = [
+        #     shutil.which("sudo"),
+        #     "--stdin",
+        #     # https://man7.org/linux/man-pages/man1/nsenter.1.html
+        #     shutil.which("nsenter"),
+        #     "--target",
+        #     target_worker,
+        #     "--uts",
+        #     "--mount",
+        #     # "env",
+        #     "bash",
+        #     "-c",
+        #     str_set_etc_hostname,
+        #     # hostname_worker,
+        # ]
 
         # Reference:
         # /usr/bin/docker --config /home/michael/git/repos/OpenStudioLandscapes/.landscapes/2025-07-23-00-51-15-1afae50517c5453b95c518ee0cd8e0aa/OpenStudioLandscapes_Base__OpenStudioLandscapes_Base/OpenStudioLandscapes_Base__docker_config_json compose --progress plain --file /home/michael/git/repos/OpenStudioLandscapes/.landscapes/2025-07-23-00-51-15-1afae50517c5453b95c518ee0cd8e0aa/Deadline_10_2_Worker__Deadline_10_2_Worker/Deadline_10_2_Worker__DOCKER_COMPOSE/docker_compose/docker-compose.yml --project-name 2025-07-23-00-51-15-1afae50517c5453b95c518ee0cd8e0aa-worker up --remove-orphans --detach && /usr/bin/sudo /usr/bin/nsenter --target $(docker inspect -f '{{ .State.Pid }}' deadline-10-2-worker-001--2025-07-23-00-51-15-1afae50517c5453b95c518ee0cd8e0aa) --uts hostname $(hostname)-deadline-10-2-worker-001 && /usr/bin/sudo /usr/bin/nsenter --target $(docker inspect -f '{{ .State.Pid }}' deadline-10-2-pulse-worker-001--2025-07-23-00-51-15-1afae50517c5453b95c518ee0cd8e0aa) --uts hostname $(hostname)-deadline-10-2-pulse-worker-001 \
@@ -470,6 +850,9 @@ def cmd_append(
             [
                 "&&",
                 *cmd_docker_compose_set_dynamic_hostname_worker,
+                # "&&",
+                # *cmd_docker_compose_truncate_etc_hosts,
+                # *cmd_docker_compose_set_dynamic_etc_hostname_worker,
             ]
         )
 
@@ -479,6 +862,8 @@ def cmd_append(
             "$(which docker)",
             "&&",
             ";",
+            # str_truncate_etc_hosts,
+            # str_set_etc_hostname,
             *exclude_from_quote,
         ]
     )
