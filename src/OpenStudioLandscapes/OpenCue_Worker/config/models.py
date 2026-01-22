@@ -54,14 +54,14 @@ class Config(FeatureBaseModel):
         default=pathlib.Path("{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage"),
     )
 
-    @field_validator('opencue_worker_NUM_SERVICES', mode='before')
+    @field_validator("opencue_worker_NUM_SERVICES", mode="before")
     @classmethod
     def validate_opencue_worker_NUM_SERVICES(cls, v: int) -> int:
         if v < 1:
             raise PydanticCustomError(
-                'OneOrMoreError',
-                '{number} must be 1 or more!',
-                {'number': v},
+                "OneOrMoreError",
+                "{number} must be 1 or more!",
+                {"number": v},
             )
         return v
 

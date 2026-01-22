@@ -49,11 +49,9 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
 
     doc.add_paragraph(
         snakemd.Inline(
-            text=textwrap.dedent(
-                """\
+            text=textwrap.dedent("""\
                 Logo OpenStudioLandscapes\
-                """
-            ),
+                """),
             image="https://github.com/michimussato/OpenStudioLandscapes/raw/main/media/images/logo128.png",
             link="https://www.url.com",
         ).__str__()
@@ -64,42 +62,30 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         level=2,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Click `Use this template` and select `Create a new repository`\
-            """
-        )
-    )
+            """))
 
     doc.add_paragraph(
         snakemd.Inline(
-            text=textwrap.dedent(
-                """\
+            text=textwrap.dedent("""\
                 Create a new repository\
-                """
-            ),
+                """),
             image="media/images/use_template.png",
             # link="https://www.url.com",
         ).__str__()
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             And fill in information as needed by specifying the `Repository name *`
             of the OpenStudioLandscapes Feature (i.e. `OpenStudioLandscapes-NewFeature`):\
-            """
-        )
-    )
+            """))
 
     doc.add_paragraph(
         snakemd.Inline(
-            text=textwrap.dedent(
-                """\
+            text=textwrap.dedent("""\
                 Create a new repository\
-                """
-            ),
+                """),
             image="media/images/create_repository.png",
             # link="https://www.url.com",
         ).__str__()
@@ -110,56 +96,36 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         level=2,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Clone the new Feature into the `.features` directory of your local
             `OpenStudioLandscapes` clone:\
-            """
-        )
-    )
+            """))
 
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
+    doc.add_code(code=textwrap.dedent("""\
             cd /to/your/git/repos/OpenStudioLandscapes/.features
             git clone <GIT_REPOSITORY_URL>\
-"""
-        )
-    )
+"""))
 
     doc.add_heading(
         text="Replace `Template` occurrences in `OpenStudioLandscapes-NewFeature`",
         level=2,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Rename the package directory from `Template` to `NewFeature`:\
-            """
-        )
-    )
+            """))
 
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
+    doc.add_code(code=textwrap.dedent("""\
             NEW_FEATURE="NewFeature"
 
             cd /to/your/git/repos/OpenStudioLandscapes/.features/OpenStudioLandscapes-${NEW_FEATURE}
             mv src/OpenStudioLandscapes/Template src/OpenStudioLandscapes/${NEW_FEATURE}\
-"""
-        )
-    )
+"""))
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Rename all occurrences of `template` in your new Feature with
             the correct name in the following files:\
-            """
-        )
-    )
+            """))
 
     doc.add_unordered_list(
         [
@@ -182,36 +148,24 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         level=2,
     )
 
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
+    doc.add_code(code=textwrap.dedent("""\
             nox -session "readme(OpenStudioLandscapes-<FEATURE>)"\
-"""
-        )
-    )
+"""))
 
     doc.add_heading(
         text="Commit your initial Setup",
         level=2,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Commit all changes to Git:\
-            """
-        )
-    )
+            """))
 
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
+    doc.add_code(code=textwrap.dedent("""\
             git add *
             git commit -m "Initial Setup"
             git push\
-"""
-        )
-    )
+"""))
 
     doc.add_heading(
         text="Tag `OpenStudioLandscapesUtil` Repos",
@@ -230,33 +184,21 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         level=2,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Commit all changes to Git:\
-            """
-        )
-    )
+            """))
 
-    doc.add_code(
-        code=textwrap.dedent(
-            """\
+    doc.add_code(code=textwrap.dedent("""\
             cd /to/your/git/repos/OpenStudioLandscapes
             source .venv/bin/activate
             pip install --editable .features/OpenStudioLandscapes-${NEW_FEATURE}[dev]
             pip install --editable .[dev]\
-"""
-        )
-    )
+"""))
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             Edit the `OpenStudioLandscapes.engine` to use
             your new Feature:\
-            """
-        )
-    )
+            """))
 
     doc.add_unordered_list(
         [
@@ -276,19 +218,14 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
         level=3,
     )
 
-    doc.add_paragraph(
-        text=textwrap.dedent(
-            """\
+    doc.add_paragraph(text=textwrap.dedent("""\
             `OpenStudioLandscapes-Template` can't be launched
             as a Feature in a Landscape. If you do, this is the
             error message you will be presented with:\
-            """
-        )
-    )
+            """))
 
     doc.add_code(
-        code=textwrap.dedent(
-            """\
+        code=textwrap.dedent("""\
             $ /home/michael/git/repos/OpenStudioLandscapes/.landscapes/2025-10-20-12-51-39-68351d36801042cb943f1675e611e3c0/ComposeScope_default__ComposeScope_default/ComposeScope_default__DOCKER_COMPOSE/docker_compose/docker_compose_up.sh
             ~/git/repos/OpenStudioLandscapes/.landscapes/2025-10-20-12-51-39-68351d36801042cb943f1675e611e3c0/ComposeScope_default__ComposeScope_default/ComposeScope_default__DOCKER_COMPOSE/docker_compose ~
             Working Directory: /home/michael/git/repos/OpenStudioLandscapes/.landscapes/2025-10-20-12-51-39-68351d36801042cb943f1675e611e3c0/ComposeScope_default__ComposeScope_default/ComposeScope_default__DOCKER_COMPOSE/docker_compose
@@ -305,8 +242,7 @@ def readme_feature(doc: snakemd.Document) -> snakemd.Document:
              Container template--2025-10-20-12-51-39-68351d36801042cb943f1675e611e3c0  Error response from daemon: no command specified
             Error response from daemon: no command specified
             ~\
-"""
-        ),
+"""),
         lang="shell",
     )
 
