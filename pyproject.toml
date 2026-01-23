@@ -55,7 +55,7 @@ lint = [
     "pylint",
 ]
 optional-base = [
-    "OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git",
+    "OpenStudioLandscapes-OpenCue[optional-base] @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git",
 ]
 pyproject = [
     "OpenStudioLandscapesUtil-VersionBumper @ git+https://github.com/michimussato/OpenStudioLandscapesUtil-VersionBumper.git",

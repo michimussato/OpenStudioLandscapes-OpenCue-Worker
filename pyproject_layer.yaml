@@ -3,7 +3,7 @@ project:
   name: OpenStudioLandscapes-OpenCue-Worker
   optional-dependencies:
     optional-base:
-    - OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
+    - OpenStudioLandscapes-OpenCue[optional-base] @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git
     dev:
     - OpenStudioLandscapes-OpenCue-Worker[lint]
     - OpenStudioLandscapes-OpenCue-Worker[sbom]
