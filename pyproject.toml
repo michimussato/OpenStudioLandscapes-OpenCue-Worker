@@ -15,8 +15,6 @@ classifiers = [
     "Programming Language :: Python",
 ]
 dependencies = [
-    "OpenStudioLandscapes @ git+https://github.com/michimussato/OpenStudioLandscapes",
-    "OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue",
     "PyYAML",
     "dagster==1.9.11",
     "docker-compose-graph @ git+https://github.com/michimussato/docker-compose-graph.git",
@@ -40,46 +38,36 @@ requires-python = ">=3.11"
 [project.entry-points]
 
 [project.optional-dependencies]
-coverage = [
-    "coverage",
-    "pytest",
-]
 dev = [
-    "OpenStudioLandscapes-OpenCue-Worker[coverage]",
     "OpenStudioLandscapes-OpenCue-Worker[lint]",
-    "OpenStudioLandscapes-OpenCue-Worker[nox]",
     "OpenStudioLandscapes-OpenCue-Worker[readme]",
     "OpenStudioLandscapes-OpenCue-Worker[sbom]",
-    "OpenStudioLandscapes-OpenCue-Worker[testing]",
 ]
 graphviz = [
     "graphviz",
     "pipdeptree",
 ]
 lint = [
+    "OpenStudioLandscapes-OpenCue-Worker[optional-base]",
     "black",
     "isort",
     "pre-commit",
     "pylint",
 ]
-nox = [
-    "OpenStudioLandscapes-OpenCue-Worker[testing]",
-    "nox",
+optional-base = [
+    "OpenStudioLandscapes-OpenCue @ git+https://github.com/michimussato/OpenStudioLandscapes-OpenCue.git",
 ]
 pyproject = [
     "OpenStudioLandscapesUtil-VersionBumper @ git+https://github.com/michimussato/OpenStudioLandscapesUtil-VersionBumper.git",
 ]
 readme = [
+    "OpenStudioLandscapes-OpenCue-Worker[optional-base]",
     "OpenStudioLandscapesUtil-ReadmeGenerator @ git+https://github.com/michimussato/OpenStudioLandscapesUtil-ReadmeGenerator.git",
 ]
 sbom = [
     "OpenStudioLandscapes-OpenCue-Worker[graphviz]",
+    "OpenStudioLandscapes-OpenCue-Worker[graphviz]",
     "cyclonedx-bom",
-]
-testing = [
-    "pytest",
-    "pytest-cov",
-    "setuptools",
 ]
 
 [project.readme]
