@@ -73,7 +73,7 @@ class Config(FeatureBaseModel):
             raise KeyError("`env` is `None`.")
         LOGGER.debug(f"Expanding {self.opencue_worker_storage}...")
         ret = pathlib.Path(
-            self.opencue_worker_storage.expanduser()
+            self.opencue_worker_storage.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
@@ -93,7 +93,7 @@ class Config(FeatureBaseModel):
 
         LOGGER.debug(f"Expanding {self.rqd_hosts_sh}...")
         ret = pathlib.Path(
-            self.rqd_hosts_sh.expanduser()
+            self.rqd_hosts_sh.expanduser()  # pylint: disable=E1101
             .as_posix()
             .format(
                 **{
