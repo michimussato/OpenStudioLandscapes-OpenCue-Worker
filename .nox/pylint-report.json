@@ -936,19 +936,6 @@
         "message-id": "C0116"
     },
     {
-        "type": "error",
-        "module": "OpenStudioLandscapes.OpenCue_Worker.config.models",
-        "obj": "Config.opencue_worker_storage_expanded",
-        "line": 76,
-        "column": 12,
-        "endLine": 76,
-        "endColumn": 50,
-        "path": "src/OpenStudioLandscapes/OpenCue_Worker/config/models.py",
-        "symbol": "no-member",
-        "message": "Instance of 'FieldInfo' has no 'expanduser' member",
-        "message-id": "E1101"
-    },
-    {
         "type": "convention",
         "module": "OpenStudioLandscapes.OpenCue_Worker.config.models",
         "obj": "Config.rqd_hosts_sh_expanded",
@@ -960,19 +947,6 @@
         "symbol": "missing-function-docstring",
         "message": "Missing function or method docstring",
         "message-id": "C0116"
-    },
-    {
-        "type": "error",
-        "module": "OpenStudioLandscapes.OpenCue_Worker.config.models",
-        "obj": "Config.rqd_hosts_sh_expanded",
-        "line": 96,
-        "column": 12,
-        "endLine": 96,
-        "endColumn": 40,
-        "path": "src/OpenStudioLandscapes/OpenCue_Worker/config/models.py",
-        "symbol": "no-member",
-        "message": "Instance of 'FieldInfo' has no 'expanduser' member",
-        "message-id": "E1101"
     },
     {
         "type": "convention",

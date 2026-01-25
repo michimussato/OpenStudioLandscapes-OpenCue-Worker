@@ -77,9 +77,7 @@ src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:25:0: C0115: Missing cl
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:59:4: C0116: Missing function or method docstring (missing-function-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:59:4: C0103: Method name "validate_opencue_worker_NUM_SERVICES" doesn't conform to snake_case naming style (invalid-name)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:70:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:76:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:89:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:96:12: E1101: Instance of 'FieldInfo' has no 'expanduser' member (no-member)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.doc.readme
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:37:0: C0301: Line too long (107/100) (line-too-long)
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -87,5 +85,5 @@ src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:6:0: C0116: Missing functi
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:21:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 6.45/10 (previous run: 6.91/10, -0.47)
+Your code has been rated at 6.86/10 (previous run: 7.45/10, -0.59)
 
