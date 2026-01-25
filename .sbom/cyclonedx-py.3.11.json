@@ -2476,7 +2476,7 @@
       "version": "0.30.0"
     },
     {
-      "bom-ref": "setuptools==80.10.1",
+      "bom-ref": "setuptools==80.10.2",
       "description": "Easily download, build, install, upgrade, and uninstall Python packages",
       "externalReferences": [
         {
@@ -2504,9 +2504,9 @@
         }
       ],
       "name": "setuptools",
-      "purl": "pkg:pypi/setuptools@80.10.1",
+      "purl": "pkg:pypi/setuptools@80.10.2",
       "type": "library",
-      "version": "80.10.1"
+      "version": "80.10.2"
     },
     {
       "bom-ref": "six==1.17.0",
@@ -3253,7 +3253,7 @@
         "pytz==2025.2",
         "requests==2.32.5",
         "rich==14.3.1",
-        "setuptools==80.10.1",
+        "setuptools==80.10.2",
         "six==1.17.0",
         "structlog==25.5.0",
         "tabulate==0.9.0",
@@ -3284,7 +3284,7 @@
         "graphviz==0.21",
         "pydot==4.0.1",
         "python-dotenv==1.2.1",
-        "setuptools==80.10.1"
+        "setuptools==80.10.2"
       ],
       "ref": "docker-compose-graph==1.0.0.post1.dev4+g3b0ba2c26"
     },
@@ -3327,7 +3327,7 @@
     },
     {
       "dependsOn": [
-        "setuptools==80.10.1"
+        "setuptools==80.10.2"
       ],
       "ref": "greenlet==3.3.1"
     },
@@ -3409,7 +3409,7 @@
     {
       "dependsOn": [
         "SQLAlchemy==2.0.46",
-        "setuptools==80.10.1",
+        "setuptools==80.10.2",
         "wheel==0.46.3"
       ],
       "ref": "packageurl-python==0.17.6"
@@ -3543,7 +3543,7 @@
         "tomli==2.4.0",
         "wheel==0.46.3"
       ],
-      "ref": "setuptools==80.10.1"
+      "ref": "setuptools==80.10.2"
     },
     {
       "ref": "six==1.17.0"
@@ -3615,13 +3615,13 @@
     {
       "dependsOn": [
         "packaging==25.0",
-        "setuptools==80.10.1"
+        "setuptools==80.10.2"
       ],
       "ref": "wheel==0.46.3"
     }
   ],
   "metadata": {
-    "timestamp": "2026-01-25T17:26:39.835122+00:00",
+    "timestamp": "2026-01-25T22:51:37.154125+00:00",
     "tools": {
       "components": [
         {
@@ -3725,7 +3725,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:bfc8e327-2d7c-48c3-92b2-5310fd1c2374",
+  "serialNumber": "urn:uuid:6a1343ab-d6f1-40d1-94b5-05905f41ec9c",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
