@@ -519,9 +519,12 @@ def compose_rqd_worker(
             )
 
         volumes_dict = {
-            "volumes": [
-                *_volume_relative,
-            ]
+            "volumes": list(
+                {
+                    *_volume_relative,
+                    *config_engine.global_bind_volumes,
+                }
+            )
         }
 
         # service_name = "rqd"
@@ -558,6 +561,7 @@ def compose_rqd_worker(
                         "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
                         "HOSTNAME": "${HOSTNAME}${HOSTNAME:+-}%s-%s"
                         % (CONFIG.compose_scope, container_name),
+                        **config_engine.global_environment_variables,
                     },
                     **copy.deepcopy(volumes_dict),
                     **copy.deepcopy(network_dict),
