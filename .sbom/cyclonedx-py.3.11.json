@@ -1274,33 +1274,33 @@
       "version": "0.21"
     },
     {
-      "bom-ref": "greenlet==3.3.0",
+      "bom-ref": "greenlet==3.3.1",
       "description": "Lightweight in-process concurrent programming",
       "externalReferences": [
         {
           "comment": "from packaging metadata Project-URL: Documentation",
           "type": "documentation",
-          "url": "https://greenlet.readthedocs.io/"
+          "url": "https://greenlet.readthedocs.io"
         },
         {
-          "comment": "from packaging metadata Project-URL: Bug Tracker",
+          "comment": "from packaging metadata Project-URL: Issues",
           "type": "issue-tracker",
           "url": "https://github.com/python-greenlet/greenlet/issues"
         },
         {
-          "comment": "from packaging metadata Project-URL: Source Code",
-          "type": "other",
-          "url": "https://github.com/python-greenlet/greenlet/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
+          "comment": "from packaging metadata Project-URL: Changelog",
           "type": "release-notes",
           "url": "https://greenlet.readthedocs.io/en/latest/changes.html"
         },
         {
-          "comment": "from packaging metadata: Home-page",
+          "comment": "from packaging metadata Project-URL: Repository",
+          "type": "vcs",
+          "url": "https://github.com/python-greenlet/greenlet"
+        },
+        {
+          "comment": "from packaging metadata Project-URL: Homepage",
           "type": "website",
-          "url": "https://greenlet.readthedocs.io/"
+          "url": "https://greenlet.readthedocs.io"
         }
       ],
       "licenses": [
@@ -1310,9 +1310,9 @@
         }
       ],
       "name": "greenlet",
-      "purl": "pkg:pypi/greenlet@3.3.0",
+      "purl": "pkg:pypi/greenlet@3.3.1",
       "type": "library",
-      "version": "3.3.0"
+      "version": "3.3.1"
     },
     {
       "bom-ref": "grpcio==1.76.0",
@@ -2395,7 +2395,7 @@
       "version": "1.1.0"
     },
     {
-      "bom-ref": "rich==14.2.0",
+      "bom-ref": "rich==14.3.1",
       "description": "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal",
       "externalReferences": [
         {
@@ -2418,9 +2418,9 @@
         }
       ],
       "name": "rich",
-      "purl": "pkg:pypi/rich@14.2.0",
+      "purl": "pkg:pypi/rich@14.3.1",
       "type": "library",
-      "version": "14.2.0"
+      "version": "14.3.1"
     },
     {
       "bom-ref": "rpds-py==0.30.0",
@@ -3145,7 +3145,7 @@
     },
     {
       "dependsOn": [
-        "greenlet==3.3.0",
+        "greenlet==3.3.1",
         "typing_extensions==4.15.0"
       ],
       "ref": "SQLAlchemy==2.0.46"
@@ -3252,7 +3252,7 @@
         "python-dotenv==1.2.1",
         "pytz==2025.2",
         "requests==2.32.5",
-        "rich==14.2.0",
+        "rich==14.3.1",
         "setuptools==80.10.1",
         "six==1.17.0",
         "structlog==25.5.0",
@@ -3329,7 +3329,7 @@
       "dependsOn": [
         "setuptools==80.10.1"
       ],
-      "ref": "greenlet==3.3.0"
+      "ref": "greenlet==3.3.1"
     },
     {
       "dependsOn": [
@@ -3530,7 +3530,7 @@
         "Pygments==2.19.2",
         "markdown-it-py==4.0.0"
       ],
-      "ref": "rich==14.2.0"
+      "ref": "rich==14.3.1"
     },
     {
       "ref": "rpds-py==0.30.0"
@@ -3621,7 +3621,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-01-23T10:15:52.184976+00:00",
+    "timestamp": "2026-01-25T17:26:39.835122+00:00",
     "tools": {
       "components": [
         {
@@ -3725,7 +3725,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:7775f3d5-a446-45dc-a971-012e61a64c60",
+  "serialNumber": "urn:uuid:bfc8e327-2d7c-48c3-92b2-5310fd1c2374",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
