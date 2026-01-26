@@ -66,18 +66,17 @@ src/OpenStudioLandscapes/OpenCue_Worker/__init__.py:6:5: W0511: TODO: Import dir
 src/OpenStudioLandscapes/OpenCue_Worker/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/__init__.py:1:0: C0103: Module name "OpenCue_Worker" doesn't conform to snake_case naming style (invalid-name)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.config.models
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:38:9: W0511: Todo (fixme)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:37:9: W0511: Todo (fixme)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:15:0: C0413: Import "from OpenStudioLandscapes.engine.config.models import FeatureBaseModel" should be placed at the top of the module (wrong-import-position)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:16:0: C0413: Import "from OpenStudioLandscapes.engine.config.str_gen import get_config_str" should be placed at the top of the module (wrong-import-position)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:18:0: C0413: Import "from OpenStudioLandscapes.OpenCue_Worker import constants, dist" should be placed at the top of the module (wrong-import-position)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:21:0: C0115: Missing class docstring (missing-class-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:22:4: C0103: Class constant name "main" doesn't conform to UPPER_CASE naming style (invalid-name)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:25:0: C0115: Missing class docstring (missing-class-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:59:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:59:4: C0103: Method name "validate_opencue_worker_NUM_SERVICES" doesn't conform to snake_case naming style (invalid-name)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:70:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:89:4: C0116: Missing function or method docstring (missing-function-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:17:0: C0413: Import "from OpenStudioLandscapes.OpenCue_Worker import constants, dist" should be placed at the top of the module (wrong-import-position)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:20:0: C0115: Missing class docstring (missing-class-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:21:4: C0103: Class constant name "main" doesn't conform to UPPER_CASE naming style (invalid-name)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:24:0: C0115: Missing class docstring (missing-class-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:58:4: C0116: Missing function or method docstring (missing-function-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:58:4: C0103: Method name "validate_opencue_worker_NUM_SERVICES" doesn't conform to snake_case naming style (invalid-name)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:69:4: C0116: Missing function or method docstring (missing-function-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:88:4: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.doc.readme
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:37:0: C0301: Line too long (107/100) (line-too-long)
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -85,5 +84,5 @@ src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:6:0: C0116: Missing functi
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:21:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 6.86/10 (previous run: 7.45/10, -0.59)
+Your code has been rated at 6.89/10 (previous run: 7.49/10, -0.60)
 
