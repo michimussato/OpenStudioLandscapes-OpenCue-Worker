@@ -555,6 +555,7 @@ def compose_rqd_worker(
                     "domainname": config_engine.openstudiolandscapes__domain_lan,
                     "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     "environment": {
+                        "TZ": CONFIG.tz,
                         "PYTHONUNBUFFERED": "1",
                         # Todo:
                         #  - [ ] use fqdn instead of just hostname?
