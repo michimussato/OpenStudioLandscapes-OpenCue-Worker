@@ -750,9 +750,11 @@ def cmd_append(
     # ('my-new-host', [], ['192.168.80.2'])
     for service_name in compose_services:
 
+        container_name = ".".join([service_name, env.get("LANDSCAPE", "default")])
+
         target_worker = (
             "\"$($(which docker) inspect --format '{{ .State.Pid }}' %s)\""
-            % ".".join([service_name, env.get("LANDSCAPE", "default")])
+            % container_name
         )
         hostname_worker = f"${{HOSTNAME}}-{service_name}"
 
@@ -850,9 +852,11 @@ def cmd_append(
             [
                 "&&",
                 *cmd_docker_compose_set_dynamic_hostname_worker,
-                # "&&",
                 # *cmd_docker_compose_truncate_etc_hosts,
                 # *cmd_docker_compose_set_dynamic_etc_hostname_worker,
+                "||",
+                "echo",
+                f"could not set hostname for {container_name}",
             ]
         )
 
@@ -862,6 +866,7 @@ def cmd_append(
             "$(which docker)",
             "&&",
             ";",
+            "||",
             # str_truncate_etc_hosts,
             # str_set_etc_hostname,
             *exclude_from_quote,
