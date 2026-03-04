@@ -1,7 +1,6 @@
 import copy
 import enum
 import pathlib
-import shutil
 import textwrap
 import urllib.parse
 from typing import Dict, Generator, List, Union
@@ -29,11 +28,9 @@ from OpenStudioLandscapes.engine.common_assets.group_in import (
 )
 from OpenStudioLandscapes.engine.common_assets.cmd import get_feature__cmd
 from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
-from OpenStudioLandscapes.engine.config.models import ConfigEngine, DockerConfigModel
+from OpenStudioLandscapes.engine.config.models import ConfigEngine
 from OpenStudioLandscapes.engine.constants import *
 from OpenStudioLandscapes.engine.enums import *
-from OpenStudioLandscapes.engine.link.models import OpenStudioLandscapesFeatureIn
-from OpenStudioLandscapes.engine.policies.retry import build_docker_image_retry_policy
 from OpenStudioLandscapes.engine.utils import *
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import *
 
@@ -43,7 +40,6 @@ from OpenStudioLandscapes.OpenCue.constants import (
     ASSET_HEADER as ASSET_HEADER_FEATURE_IN,
 )
 
-from OpenStudioLandscapes.OpenCue_Worker import dist
 from OpenStudioLandscapes.OpenCue_Worker.config.models import CONFIG_STR, Config
 from OpenStudioLandscapes.OpenCue_Worker.constants import *
 
@@ -201,175 +197,6 @@ def compose_networks(
 @asset(
     **ASSET_HEADER,
     ins={
-        "feature_in": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "feature_in"]),
-        ),
-        "CONFIG": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
-        ),
-    },
-    retry_policy=build_docker_image_retry_policy,
-)
-def build_docker_image(
-    context: AssetExecutionContext,
-    feature_in: OpenStudioLandscapesFeatureIn,  # pylint: disable=redefined-outer-name
-    CONFIG: Config,  # pylint: disable=redefined-outer-name
-) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
-    """ """
-
-    env: Dict = CONFIG.env
-
-    docker_config_json: pathlib.Path = (
-        feature_in.openstudiolandscapes_base.docker_config_json
-    )
-
-    config_engine: ConfigEngine = CONFIG.config_engine
-
-    docker_config: DockerConfigModel = config_engine.openstudiolandscapes__docker_config
-
-    docker_image: Dict = feature_in.openstudiolandscapes_base.docker_image_base
-    context.log.debug(f"{docker_image = }")
-    # docker_image = {'image_name': 'openstudiolandscapes_base_build_docker_image', 'image_prefixes': '', 'image_tags': ['2025-11-17-01-26-31-05a9b85aa33b47ffa7dfb21a28ca24ab'], 'image_parent': {}}
-
-    docker_file = pathlib.Path(
-        env["DOT_LANDSCAPES"],
-        env.get("LANDSCAPE", "default"),
-        f"{dist.name}",
-        "__".join(context.asset_key.path),
-        "Dockerfiles",
-        "Dockerfile",
-    )
-
-    docker_file.parent.mkdir(parents=True, exist_ok=True)
-
-    #################################################
-
-    (
-        image_name,
-        image_prefixes,
-        tags,
-        build_base_parent_image_prefix,
-        build_base_parent_image_name,
-        build_base_parent_image_tags,
-    ) = get_image_metadata(
-        context=context,
-        docker_image=docker_image,
-        docker_config=docker_config,
-        env=env,
-    )
-
-    #################################################
-
-    # @formatter:off
-    hosts_sh = {
-        # "AWSPortalLink.run": CONFIG.deadline_10_2_installer_aws_portal_link_expanded,
-        "hosts.sh": CONFIG.rqd_hosts_sh_expanded,
-        # "DeadlineRepository.run": CONFIG.deadline_10_2_installer_deadline_repository_expanded,
-    }
-    # @formatter:on
-
-    payload = docker_file.parent / "payload"
-    payload.mkdir(parents=True, exist_ok=True)
-
-    copy_str: str = get_copy_str(
-        temp_dir=payload,
-        copy_packages=hosts_sh,
-        mode=755,
-    )
-
-    # apt_install_str: str = get_apt_install_str(
-    #     apt_install_packages=CONFIG.apt_packages,
-    # )
-    #
-    # pip_install_str: str = get_pip_install_str(
-    #     pip_install_packages=CONFIG.pip_packages,
-    # )
-
-    # @formatter:off
-    docker_file_str = textwrap.dedent("""\
-        # {auto_generated}
-        # {dagster_url}
-        FROM {parent_image} AS {image_name}
-        LABEL authors="{AUTHOR}"
-        
-        SHELL ["/bin/bash", "-c"]
-        
-        WORKDIR /
-
-        {copy_str}
-        
-        WORKDIR /opt/opencue
-        
-        # Default ENTRYPOINT of {parent_image} is
-        # ENTRYPOINT set -e && rqd
-        # Now the /hosts.sh part is a big hack to be able
-        # (at least to some extent) to control the hostname
-        # of rqd on the target machine. OpenCue is pretty 
-        # messed up in terms of applying the hostname itself
-        # to rqd and how it's displayed in CueCommander.
-        # We modify the default image here and mess with 
-        # /etc/hosts file.
-        ENTRYPOINT set -e && /hosts.sh && rqd
-        CMD []
-        """).format(
-        copy_str=copy_str,
-        auto_generated=f"AUTO-GENERATED by Dagster Asset {'__'.join(context.asset_key.path)}",
-        dagster_url=urllib.parse.quote(
-            f"http://localhost:3000/asset-groups/{'%2F'.join(context.asset_key.path)}",
-            safe=":/%",
-        ),
-        image_name=image_name,
-        # Todo: this won't work as expected if len(tags) > 1
-        parent_image="docker.io/opencue/rqd",
-        **env,
-    )
-    # @formatter:on
-
-    with open(docker_file, "w") as fw:
-        fw.write(docker_file_str)
-
-    with open(docker_file, "r") as fr:
-        docker_file_content = fr.read()
-
-    # Copy Deadline Installer(s) to build context
-    for key, value in hosts_sh.items():
-        if not value.exists():
-            context.log.error(f"File {value.as_posix()} does not exist")
-        context.log.debug(f"{value = }")
-        context.log.debug(f"{payload / key = }")
-        shutil.copyfile(
-            src=value,
-            dst=payload / key,
-        )
-
-    #################################################
-
-    image_data, logs = create_image(
-        context=context,
-        image_name=image_name,
-        image_prefixes=image_prefixes,
-        tags=tags,
-        docker_image=docker_image,
-        docker_config=docker_config,
-        docker_config_json=docker_config_json,
-        docker_file=docker_file,
-    )
-
-    yield Output(image_data)
-
-    yield AssetMaterialization(
-        asset_key=context.asset_key,
-        metadata={
-            "__".join(context.asset_key.path): MetadataValue.json(image_data),
-            "docker_file": MetadataValue.md(f"```yaml\n{docker_file_content}\n```"),
-            "logs": MetadataValue.json(logs),
-        },
-    )
-
-
-@asset(
-    **ASSET_HEADER,
-    ins={
         "CONFIG": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
@@ -378,9 +205,6 @@ def build_docker_image(
         ),
         "compose_networks": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
-        ),
-        "build": AssetIn(
-            AssetKey([*ASSET_HEADER["key_prefix"], "build_docker_image"]),
         ),
     },
     description=textwrap.dedent("""
@@ -412,7 +236,6 @@ def compose_rqd_worker(
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
-    build: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
@@ -538,13 +361,7 @@ def compose_rqd_worker(
         docker_dict["services"].update(
             {
                 service_name: {
-                    # "image": "docker.io/opencue/rqd",
-                    "image": "%s%s:%s"
-                    % (
-                        build["image_prefixes"],
-                        build["image_name"],
-                        build["image_tags"][0],
-                    ),
+                    "image": CONFIG_PARENT.OPENCUE_RQD_DOCKER_IMAGE,
                     "container_name": container_name,
                     # To have a unique, dynamic hostname, we simply must not
                     # specify it.
@@ -560,6 +377,9 @@ def compose_rqd_worker(
                         #  - [ ] use fqdn instead of just hostname?
                         # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqconstants.py
                         "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
+                        # Todo
+                        #  - [ ] Is this still necessary now that we *can*
+                        #        specify the worker hostname at runtime?
                         "HOSTNAME": "${HOSTNAME}${HOSTNAME:+-}%s-%s"
                         % (CONFIG.compose_scope, container_name),
                         **config_engine.global_environment_variables,
