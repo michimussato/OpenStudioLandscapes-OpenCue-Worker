@@ -206,6 +206,11 @@ def compose_networks(
         "compose_networks": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
+        "build_docker_image": AssetIn(
+            AssetKey(
+                [*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]
+            ),
+        ),
     },
     description=textwrap.dedent("""
         Based on
@@ -236,6 +241,7 @@ def compose_rqd_worker(
     CONFIG: Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
+    build_docker_image: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
@@ -346,6 +352,7 @@ def compose_rqd_worker(
                     *_volume_relative,
                     *config_engine.global_bind_volumes,
                     *CONFIG.local_bind_volumes,
+                    *config_engine.openstudiolandscapes__rez_config.REZ_PACKAGES_PATH_VOL,
                 }
             )
         }
@@ -361,7 +368,13 @@ def compose_rqd_worker(
         docker_dict["services"].update(
             {
                 service_name: {
-                    "image": CONFIG_PARENT.OPENCUE_RQD_DOCKER_IMAGE,
+                    # "image": CONFIG_PARENT.OPENCUE_RQD_DOCKER_IMAGE,
+                    "image": "%s%s:%s"
+                    % (
+                        build_docker_image["image_prefixes"],
+                        build_docker_image["image_name"],
+                        build_docker_image["image_tags"][0],
+                    ),
                     "container_name": container_name,
                     # To have a unique, dynamic hostname, we simply must not
                     # specify it.
@@ -384,6 +397,7 @@ def compose_rqd_worker(
                         % (CONFIG.compose_scope, container_name),
                         **config_engine.global_environment_variables,
                         **CONFIG.local_environment_variables,
+                        **config_engine.openstudiolandscapes__rez_config.REZ_ENVIRONMENT,
                     },
                     **copy.deepcopy(volumes_dict),
                     **copy.deepcopy(network_dict),
@@ -391,6 +405,8 @@ def compose_rqd_worker(
                 },
             },
         )
+
+    context.log.debug(docker_dict)
 
     docker_yaml = yaml.dump(docker_dict)
 
