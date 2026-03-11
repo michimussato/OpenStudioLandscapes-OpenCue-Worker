@@ -264,7 +264,7 @@
       "version": "2.19.2"
     },
     {
-      "bom-ref": "SQLAlchemy==2.0.46",
+      "bom-ref": "SQLAlchemy==2.0.48",
       "description": "Database Abstraction Library",
       "externalReferences": [
         {
@@ -292,9 +292,9 @@
         }
       ],
       "name": "SQLAlchemy",
-      "purl": "pkg:pypi/sqlalchemy@2.0.46",
+      "purl": "pkg:pypi/sqlalchemy@2.0.48",
       "type": "library",
-      "version": "2.0.46"
+      "version": "2.0.48"
     },
     {
       "bom-ref": "SnakeMD==2.4.0",
@@ -525,7 +525,7 @@
       "version": "5.0"
     },
     {
-      "bom-ref": "certifi==2026.1.4",
+      "bom-ref": "certifi==2026.2.25",
       "description": "Python package for providing Mozilla's CA Bundle.",
       "externalReferences": [
         {
@@ -554,9 +554,9 @@
         }
       ],
       "name": "certifi",
-      "purl": "pkg:pypi/certifi@2026.1.4",
+      "purl": "pkg:pypi/certifi@2026.2.25",
       "type": "library",
-      "version": "2026.1.4"
+      "version": "2026.2.25"
     },
     {
       "bom-ref": "chardet==5.2.0",
@@ -597,7 +597,7 @@
       "version": "5.2.0"
     },
     {
-      "bom-ref": "charset-normalizer==3.4.4",
+      "bom-ref": "charset-normalizer==3.4.5",
       "description": "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.",
       "externalReferences": [
         {
@@ -630,9 +630,9 @@
         }
       ],
       "name": "charset-normalizer",
-      "purl": "pkg:pypi/charset-normalizer@3.4.4",
+      "purl": "pkg:pypi/charset-normalizer@3.4.5",
       "type": "library",
-      "version": "3.4.4"
+      "version": "3.4.5"
     },
     {
       "bom-ref": "click==8.3.1",
@@ -1079,7 +1079,7 @@
       "version": "2.3.0"
     },
     {
-      "bom-ref": "filelock==3.24.3",
+      "bom-ref": "filelock==3.25.1",
       "description": "A platform independent file lock.",
       "externalReferences": [
         {
@@ -1112,9 +1112,9 @@
         }
       ],
       "name": "filelock",
-      "purl": "pkg:pypi/filelock@3.24.3",
+      "purl": "pkg:pypi/filelock@3.25.1",
       "type": "library",
-      "version": "3.24.3"
+      "version": "3.25.1"
     },
     {
       "bom-ref": "fqdn==1.5.1",
@@ -1315,7 +1315,7 @@
       "version": "3.3.2"
     },
     {
-      "bom-ref": "grpcio==1.78.1",
+      "bom-ref": "grpcio==1.78.0",
       "description": "HTTP/2-based RPC framework",
       "externalReferences": [
         {
@@ -1348,9 +1348,9 @@
         }
       ],
       "name": "grpcio",
-      "purl": "pkg:pypi/grpcio@1.78.1",
+      "purl": "pkg:pypi/grpcio@1.78.0",
       "type": "library",
-      "version": "1.78.1"
+      "version": "1.78.0"
     },
     {
       "bom-ref": "grpcio-health-checking==1.71.2",
@@ -2160,7 +2160,7 @@
       "version": "2.9.0.post0"
     },
     {
-      "bom-ref": "python-dotenv==1.2.1",
+      "bom-ref": "python-dotenv==1.2.2",
       "description": "Read key-value pairs from a .env file and set them as environment variables",
       "externalReferences": [
         {
@@ -2178,12 +2178,12 @@
         }
       ],
       "name": "python-dotenv",
-      "purl": "pkg:pypi/python-dotenv@1.2.1",
+      "purl": "pkg:pypi/python-dotenv@1.2.2",
       "type": "library",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
-      "bom-ref": "pytz==2025.2",
+      "bom-ref": "pytz==2026.1.post1",
       "description": "World timezone definitions, modern and historical",
       "externalReferences": [
         {
@@ -2206,9 +2206,9 @@
         }
       ],
       "name": "pytz",
-      "purl": "pkg:pypi/pytz@2025.2",
+      "purl": "pkg:pypi/pytz@2026.1.post1",
       "type": "library",
-      "version": "2025.2"
+      "version": "2026.1.post1"
     },
     {
       "bom-ref": "referencing==0.37.0",
@@ -2468,8 +2468,8 @@
       "version": "0.30.0"
     },
     {
-      "bom-ref": "setuptools==82.0.0",
-      "description": "Easily download, build, install, upgrade, and uninstall Python packages",
+      "bom-ref": "setuptools==82.0.1",
+      "description": "Most extensible Python build backend with support for C/C++ extension modules",
       "externalReferences": [
         {
           "comment": "from packaging metadata Project-URL: Documentation",
@@ -2496,9 +2496,9 @@
         }
       ],
       "name": "setuptools",
-      "purl": "pkg:pypi/setuptools@82.0.0",
+      "purl": "pkg:pypi/setuptools@82.0.1",
       "type": "library",
-      "version": "82.0.0"
+      "version": "82.0.1"
     },
     {
       "bom-ref": "six==1.17.0",
@@ -2524,7 +2524,7 @@
       "version": "1.17.0"
     },
     {
-      "bom-ref": "smmap==5.0.2",
+      "bom-ref": "smmap==5.0.3",
       "description": "A pure Python implementation of a sliding window memory map manager",
       "externalReferences": [
         {
@@ -2548,9 +2548,9 @@
         }
       ],
       "name": "smmap",
-      "purl": "pkg:pypi/smmap@5.0.2",
+      "purl": "pkg:pypi/smmap@5.0.3",
       "type": "library",
-      "version": "5.0.2"
+      "version": "5.0.3"
     },
     {
       "bom-ref": "sortedcontainers==2.4.0",
@@ -2632,7 +2632,7 @@
       "version": "25.5.0"
     },
     {
-      "bom-ref": "tabulate==0.9.0",
+      "bom-ref": "tabulate==0.10.0",
       "description": "Pretty-print tabular data",
       "externalReferences": [
         {
@@ -2650,9 +2650,9 @@
         }
       ],
       "name": "tabulate",
-      "purl": "pkg:pypi/tabulate@0.9.0",
+      "purl": "pkg:pypi/tabulate@0.10.0",
       "type": "library",
-      "version": "0.9.0"
+      "version": "0.10.0"
     },
     {
       "bom-ref": "tomli==2.4.0",
@@ -3124,7 +3124,7 @@
         "greenlet==3.3.2",
         "typing_extensions==4.15.0"
       ],
-      "ref": "SQLAlchemy==2.0.46"
+      "ref": "SQLAlchemy==2.0.48"
     },
     {
       "ref": "SnakeMD==2.4.0"
@@ -3132,7 +3132,7 @@
     {
       "dependsOn": [
         "Mako==1.3.10",
-        "SQLAlchemy==2.0.46",
+        "SQLAlchemy==2.0.48",
         "tomli==2.4.0",
         "typing_extensions==4.15.0",
         "tzdata==2025.3"
@@ -3151,7 +3151,7 @@
     {
       "dependsOn": [
         "python-dateutil==2.9.0.post0",
-        "pytz==2025.2",
+        "pytz==2026.1.post1",
         "tzdata==2025.3"
       ],
       "ref": "arrow==1.4.0"
@@ -3163,13 +3163,13 @@
       "ref": "boolean.py==5.0"
     },
     {
-      "ref": "certifi==2026.1.4"
+      "ref": "certifi==2026.2.25"
     },
     {
       "ref": "chardet==5.2.0"
     },
     {
-      "ref": "charset-normalizer==3.4.4"
+      "ref": "charset-normalizer==3.4.5"
     },
     {
       "ref": "click==8.3.1"
@@ -3211,28 +3211,28 @@
       "dependsOn": [
         "Jinja2==3.1.6",
         "PyYAML==6.0.3",
-        "SQLAlchemy==2.0.46",
+        "SQLAlchemy==2.0.48",
         "alembic==1.18.4",
         "antlr4-python3-runtime==4.13.2",
         "click==8.3.1",
         "coloredlogs==14.0",
         "dagster-pipes==1.9.11",
         "docstring_parser==0.17.0",
-        "filelock==3.24.3",
+        "filelock==3.25.1",
         "fsspec==2026.2.0",
         "grpcio-health-checking==1.71.2",
-        "grpcio==1.78.1",
+        "grpcio==1.78.0",
         "packaging==26.0",
         "protobuf==5.29.6",
         "pydantic==2.12.5",
-        "python-dotenv==1.2.1",
-        "pytz==2025.2",
+        "python-dotenv==1.2.2",
+        "pytz==2026.1.post1",
         "requests==2.32.5",
         "rich==14.3.3",
-        "setuptools==82.0.0",
+        "setuptools==82.0.1",
         "six==1.17.0",
         "structlog==25.5.0",
-        "tabulate==0.9.0",
+        "tabulate==0.10.0",
         "tomli==2.4.0",
         "toposort==1.10",
         "tqdm==4.67.3",
@@ -3259,8 +3259,8 @@
         "PyYAML==6.0.3",
         "graphviz==0.21",
         "pydot==4.0.1",
-        "python-dotenv==1.2.1",
-        "setuptools==82.0.0"
+        "python-dotenv==1.2.2",
+        "setuptools==82.0.1"
       ],
       "ref": "docker-compose-graph==1.0.0.post1.dev5+ga91125bef"
     },
@@ -3275,7 +3275,7 @@
       "ref": "email-validator==2.3.0"
     },
     {
-      "ref": "filelock==3.24.3"
+      "ref": "filelock==3.25.1"
     },
     {
       "ref": "fqdn==1.5.1"
@@ -3291,7 +3291,7 @@
     },
     {
       "dependsOn": [
-        "smmap==5.0.2"
+        "smmap==5.0.3"
       ],
       "ref": "gitdb==4.0.12"
     },
@@ -3303,13 +3303,13 @@
     },
     {
       "dependsOn": [
-        "setuptools==82.0.0"
+        "setuptools==82.0.1"
       ],
       "ref": "greenlet==3.3.2"
     },
     {
       "dependsOn": [
-        "grpcio==1.78.1",
+        "grpcio==1.78.0",
         "protobuf==5.29.6"
       ],
       "ref": "grpcio-health-checking==1.71.2"
@@ -3318,7 +3318,7 @@
       "dependsOn": [
         "typing_extensions==4.15.0"
       ],
-      "ref": "grpcio==1.78.1"
+      "ref": "grpcio==1.78.0"
     },
     {
       "ref": "humanfriendly==10.0"
@@ -3384,8 +3384,8 @@
     },
     {
       "dependsOn": [
-        "SQLAlchemy==2.0.46",
-        "setuptools==82.0.0",
+        "SQLAlchemy==2.0.48",
+        "setuptools==82.0.1",
         "wheel==0.46.3"
       ],
       "ref": "packageurl-python==0.17.6"
@@ -3463,10 +3463,10 @@
       "dependsOn": [
         "click==8.3.1"
       ],
-      "ref": "python-dotenv==1.2.1"
+      "ref": "python-dotenv==1.2.2"
     },
     {
-      "ref": "pytz==2025.2"
+      "ref": "pytz==2026.1.post1"
     },
     {
       "dependsOn": [
@@ -3478,9 +3478,9 @@
     },
     {
       "dependsOn": [
-        "certifi==2026.1.4",
+        "certifi==2026.2.25",
         "chardet==5.2.0",
-        "charset-normalizer==3.4.4",
+        "charset-normalizer==3.4.5",
         "idna==3.11",
         "urllib3==2.6.3"
       ],
@@ -3513,19 +3513,19 @@
     },
     {
       "dependsOn": [
-        "filelock==3.24.3",
+        "filelock==3.25.1",
         "packaging==26.0",
         "pip==26.0.1",
         "tomli==2.4.0",
         "wheel==0.46.3"
       ],
-      "ref": "setuptools==82.0.0"
+      "ref": "setuptools==82.0.1"
     },
     {
       "ref": "six==1.17.0"
     },
     {
-      "ref": "smmap==5.0.2"
+      "ref": "smmap==5.0.3"
     },
     {
       "ref": "sortedcontainers==2.4.0"
@@ -3537,7 +3537,7 @@
       "ref": "structlog==25.5.0"
     },
     {
-      "ref": "tabulate==0.9.0"
+      "ref": "tabulate==0.10.0"
     },
     {
       "ref": "tomli==2.4.0"
@@ -3591,13 +3591,13 @@
     {
       "dependsOn": [
         "packaging==26.0",
-        "setuptools==82.0.0"
+        "setuptools==82.0.1"
       ],
       "ref": "wheel==0.46.3"
     }
   ],
   "metadata": {
-    "timestamp": "2026-02-24T10:52:55.115663+00:00",
+    "timestamp": "2026-03-11T15:03:24.702765+00:00",
     "tools": {
       "components": [
         {
@@ -3701,7 +3701,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:82ae6e0a-5a50-4d29-8650-cdf0cfa55a08",
+  "serialNumber": "urn:uuid:7f1aa3a8-7fbd-43b1-b7b4-a90c49715446",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",

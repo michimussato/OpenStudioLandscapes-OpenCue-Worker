@@ -16,6 +16,7 @@ from dagster import (
     Output,
     asset,
 )
+from OpenStudioLandscapes.engine.common_assets.cmd import get_feature__cmd
 from OpenStudioLandscapes.engine.common_assets.compose import get_compose
 from OpenStudioLandscapes.engine.common_assets.docker_compose_graph import (
     get_docker_compose_graph,
@@ -26,7 +27,6 @@ from OpenStudioLandscapes.engine.common_assets.group_in import (
     get_feature_in,
     get_feature_in_parent,
 )
-from OpenStudioLandscapes.engine.common_assets.cmd import get_feature__cmd
 from OpenStudioLandscapes.engine.common_assets.group_out import get_group_out
 from OpenStudioLandscapes.engine.config.models import ConfigEngine
 from OpenStudioLandscapes.engine.constants import *
@@ -207,9 +207,7 @@ def compose_networks(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build_docker_image": AssetIn(
-            AssetKey(
-                [*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]
-            ),
+            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]),
         ),
     },
     description=textwrap.dedent("""
