@@ -597,7 +597,7 @@
       "version": "5.2.0"
     },
     {
-      "bom-ref": "charset-normalizer==3.4.5",
+      "bom-ref": "charset-normalizer==3.4.6",
       "description": "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.",
       "externalReferences": [
         {
@@ -630,9 +630,9 @@
         }
       ],
       "name": "charset-normalizer",
-      "purl": "pkg:pypi/charset-normalizer@3.4.5",
+      "purl": "pkg:pypi/charset-normalizer@3.4.6",
       "type": "library",
-      "version": "3.4.5"
+      "version": "3.4.6"
     },
     {
       "bom-ref": "click==8.3.1",
@@ -1079,7 +1079,7 @@
       "version": "2.3.0"
     },
     {
-      "bom-ref": "filelock==3.25.1",
+      "bom-ref": "filelock==3.25.2",
       "description": "A platform independent file lock.",
       "externalReferences": [
         {
@@ -1112,9 +1112,9 @@
         }
       ],
       "name": "filelock",
-      "purl": "pkg:pypi/filelock@3.25.1",
+      "purl": "pkg:pypi/filelock@3.25.2",
       "type": "library",
-      "version": "3.25.1"
+      "version": "3.25.2"
     },
     {
       "bom-ref": "fqdn==1.5.1",
@@ -3169,7 +3169,7 @@
       "ref": "chardet==5.2.0"
     },
     {
-      "ref": "charset-normalizer==3.4.5"
+      "ref": "charset-normalizer==3.4.6"
     },
     {
       "ref": "click==8.3.1"
@@ -3218,7 +3218,7 @@
         "coloredlogs==14.0",
         "dagster-pipes==1.9.11",
         "docstring_parser==0.17.0",
-        "filelock==3.25.1",
+        "filelock==3.25.2",
         "fsspec==2026.2.0",
         "grpcio-health-checking==1.71.2",
         "grpcio==1.78.0",
@@ -3275,7 +3275,7 @@
       "ref": "email-validator==2.3.0"
     },
     {
-      "ref": "filelock==3.25.1"
+      "ref": "filelock==3.25.2"
     },
     {
       "ref": "fqdn==1.5.1"
@@ -3480,7 +3480,7 @@
       "dependsOn": [
         "certifi==2026.2.25",
         "chardet==5.2.0",
-        "charset-normalizer==3.4.5",
+        "charset-normalizer==3.4.6",
         "idna==3.11",
         "urllib3==2.6.3"
       ],
@@ -3513,7 +3513,7 @@
     },
     {
       "dependsOn": [
-        "filelock==3.25.1",
+        "filelock==3.25.2",
         "packaging==26.0",
         "pip==26.0.1",
         "tomli==2.4.0",
@@ -3597,7 +3597,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-03-11T15:03:24.702765+00:00",
+    "timestamp": "2026-03-17T14:12:55.094350+00:00",
     "tools": {
       "components": [
         {
@@ -3701,7 +3701,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:7f1aa3a8-7fbd-43b1-b7b4-a90c49715446",
+  "serialNumber": "urn:uuid:a2d1c998-28e2-4d7f-80e4-707e860ad4c0",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
