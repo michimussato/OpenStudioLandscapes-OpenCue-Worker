@@ -33,13 +33,6 @@ class Config(FeatureBaseModel):
 
     opencue_rqd_worker: str = "opencue-rqd-worker"
 
-    rqd_hosts_sh: pathlib.Path = Field(
-        # Todo
-        #  default="<NOT_SET__CHANGE_ME>",
-        # description="The host side LikeC4 datastore destination.",
-        default=pathlib.Path("{DOT_FEATURES}/{FEATURE}/.payload/bin/hosts.sh"),
-    )
-
     opencue_worker_NUM_SERVICES: PositiveInt = Field(
         default=1,
         description="Number of workers to simulate in parallel.",
