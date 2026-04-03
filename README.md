@@ -322,20 +322,6 @@ feature_name: OpenStudioLandscapes-OpenCue-Worker
 opencue_rqd_worker: opencue-rqd-worker
 
 
-# ============
-# rqd_hosts_sh
-# ------------
-#
-# Type: <class 'pathlib.Path'>
-# Description:
-#     None
-# Required:
-#     False
-# Examples:
-#     None
-rqd_hosts_sh: '{DOT_FEATURES}/{FEATURE}/.payload/bin/hosts.sh'
-
-
 # ===========================
 # opencue_worker_NUM_SERVICES
 # ---------------------------
@@ -424,4 +410,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-03-27 00:12:48 UTC**
+Last changed: **2026-04-03 02:50:25 UTC**

@@ -8,10 +8,10 @@ flowchart TD
     boolean-py["boolean.py<br/>5.0"]
     certifi["certifi<br/>2026.2.25"]
     chardet["chardet<br/>5.2.0"]
-    charset-normalizer["charset-normalizer<br/>3.4.6"]
+    charset-normalizer["charset-normalizer<br/>3.4.7"]
     click_0["click<br/>8.3.1"]
     coloredlogs["coloredlogs<br/>14.0"]
-    cyclonedx-bom["cyclonedx-bom<br/>7.2.2"]
+    cyclonedx-bom["cyclonedx-bom<br/>7.3.0"]
     cyclonedx-python-lib["cyclonedx-python-lib<br/>11.7.0"]
     dagster-pipes["dagster-pipes<br/>1.9.11"]
     dagster["dagster<br/>1.9.11"]
@@ -22,13 +22,13 @@ flowchart TD
     email-validator["email-validator<br/>2.3.0"]
     filelock["filelock<br/>3.25.2"]
     fqdn["fqdn<br/>1.5.1"]
-    fsspec["fsspec<br/>2026.2.0"]
+    fsspec["fsspec<br/>2026.3.0"]
     gitdb["gitdb<br/>4.0.12"]
     gitpython["GitPython<br/>3.1.46"]
     graphviz["graphviz<br/>0.21"]
     greenlet["greenlet<br/>3.3.2"]
     grpcio-health-checking["grpcio-health-checking<br/>1.71.2"]
-    grpcio["grpcio<br/>1.78.0"]
+    grpcio["grpcio<br/>1.80.0"]
     humanfriendly["humanfriendly<br/>10.0"]
     idna["idna<br/>3.11"]
     isoduration["isoduration<br/>20.11.0"]
@@ -43,6 +43,7 @@ flowchart TD
     markdown-it-py["markdown-it-py<br/>4.0.0"]
     markupsafe["MarkupSafe<br/>3.0.3"]
     mdurl["mdurl<br/>0.1.2"]
+    openstudiolandscapes-dagstercodelocation-streamingprocess["OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess<br/>0.0.0"]
     openstudiolandscapes-opencue-worker["OpenStudioLandscapes-OpenCue-Worker<br/>0.0.0"]
     packageurl-python["packageurl-python<br/>0.17.6"]
     packaging["packaging<br/>26.0"]
@@ -55,14 +56,14 @@ flowchart TD
     pydantic-core["pydantic_core<br/>2.41.5"]
     pydantic["pydantic<br/>2.12.5"]
     pydot["pydot<br/>4.0.1"]
-    pygments["Pygments<br/>2.19.2"]
+    pygments["Pygments<br/>2.20.0"]
     pyparsing["pyparsing<br/>3.3.2"]
     python-dateutil["python-dateutil<br/>2.9.0.post0"]
     python-dotenv["python-dotenv<br/>1.2.2"]
     pytz["pytz<br/>2026.1.post1"]
     pyyaml["PyYAML<br/>6.0.3"]
     referencing["referencing<br/>0.37.0"]
-    requests["requests<br/>2.33.0"]
+    requests["requests<br/>2.33.1"]
     rfc3339-validator["rfc3339-validator<br/>0.1.4"]
     rfc3986-validator["rfc3986-validator<br/>0.1.1"]
     rfc3987-syntax["rfc3987-syntax<br/>1.1.0"]
@@ -155,10 +156,12 @@ flowchart TD
     license-expression -- ">=4.0" --> boolean-py
     mako -- ">=0.9.2" --> markupsafe
     markdown-it-py -- "~=0.1" --> mdurl
+    openstudiolandscapes-dagstercodelocation-streamingprocess -- "==1.9.11" --> dagster
     openstudiolandscapes-opencue-worker -- "==1.9.11" --> dagster
     openstudiolandscapes-opencue-worker -- "any" --> docker-compose-graph
     openstudiolandscapes-opencue-worker -- "any" --> email-validator
     openstudiolandscapes-opencue-worker -- "any" --> gitpython
+    openstudiolandscapes-opencue-worker -- "any" --> openstudiolandscapes-dagstercodelocation-streamingprocess
     openstudiolandscapes-opencue-worker -- "any" --> pyyaml
     openstudiolandscapes-opencue-worker -- "any" --> snakemd
     pip-requirements-parser -- "any" --> packaging
