@@ -26,6 +26,8 @@ src/OpenStudioLandscapes/OpenCue_Worker/assets.py:35:0: W0614: Unused import(s) 
 src/OpenStudioLandscapes/OpenCue_Worker/assets.py:44:0: W0614: Unused import(s) GROUP, KEY and dist from wildcard import of OpenStudioLandscapes.OpenCue_Worker.constants (unused-wildcard-import)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.definitions
 src/OpenStudioLandscapes/OpenCue_Worker/definitions.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/definitions.py:5:0: E0401: Unable to import 'OpenStudioLandscapes.engine.features.upstream_asset_specs' (import-error)
+src/OpenStudioLandscapes/OpenCue_Worker/definitions.py:5:0: E0611: No name 'features' in module 'OpenStudioLandscapes.engine' (no-name-in-module)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.readme_feature
 src/OpenStudioLandscapes/OpenCue_Worker/readme_feature.py:55:0: C0301: Line too long (107/100) (line-too-long)
 src/OpenStudioLandscapes/OpenCue_Worker/readme_feature.py:138:0: C0301: Line too long (144/100) (line-too-long)
@@ -62,5 +64,5 @@ src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:6:0: C0116: Missing functi
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:21:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.22/10 (previous run: 7.49/10, -0.27)
+Your code has been rated at 6.72/10 (previous run: 7.25/10, -0.54)
 
