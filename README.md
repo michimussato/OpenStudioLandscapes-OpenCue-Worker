@@ -8,6 +8,7 @@
       1. [Clone and Install](#clone-and-install)
    3. [Configure](#configure)
       1. [Default Configuration](#default-configuration)
+   4. [Local Development](#local-development)
 2. [External Resources](#external-resources)
 3. [Community](#community)
 
@@ -38,7 +39,6 @@ source .venv/bin/activate
 openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git
 deactivate
 # Check the resulting console output for installation instructions
-
 ```
 
 ### Clone and Install
@@ -49,7 +49,6 @@ source .venv/bin/activate
 openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git \
     && pip install --editable ./.features/OpenStudioLandscapes-OpenCue-Worker
 deactivate
-
 ```
 
 For more info on `pip` see [VCS Support of `pip`](https://pip.pypa.io/en/stable/topics/vcs-support/).
@@ -76,7 +75,6 @@ A local config store location will be created if it doesn't exist, together with
 The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` and are based on [`OpenStudioLandscapes-OpenCue-Worker/tree/main/OpenStudioLandscapes/OpenCue_Worker/config/models.py`](https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker/tree/main/OpenStudioLandscapes/OpenCue_Worker/config/models.py).
 
 ### Default Configuration
-
 
 <details open>
 <summary><code>config.yml</code></summary>
@@ -364,9 +362,19 @@ opencue_worker_PADDING: 3
 opencue_worker_storage: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
 ```
 
-
 </details>
 
+
+## Local Development
+
+```shell
+cd ./.features/OpenStudioLandscapes-OpenCue-Worker
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip setuptools setuptools_scm wheel
+pip install --editable .[dev]
+dagster dev --workspace workspace.yaml
+```
 
 ***
 
@@ -410,4 +418,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-04-03 02:50:25 UTC**
+Last changed: **2026-04-11 01:59:48 UTC**
