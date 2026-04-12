@@ -1,5 +1,5 @@
 from dagster import Definitions
-from OpenStudioLandscapes.engine.base.assets import group_out_base_spec
+from OpenStudioLandscapes.engine.base.assets import group_out_base
 
 from OpenStudioLandscapes.OpenCue_Worker.definitions import assets_base
 
@@ -15,7 +15,7 @@ from OpenStudioLandscapes.OpenCue.assets import (
 # its Materializable Asset to be a `multi_asset`
 
 assets_external = []
-assets_external.append(group_out_base_spec)
+assets_external.extend(group_out_base.specs)
 assets_external.extend(build_docker_image.specs)
 assets_external.extend(feature_out_v2.specs)
 
