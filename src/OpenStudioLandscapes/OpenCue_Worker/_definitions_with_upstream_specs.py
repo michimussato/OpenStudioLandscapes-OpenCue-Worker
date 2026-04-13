@@ -1,13 +1,11 @@
 from dagster import Definitions
 from OpenStudioLandscapes.engine.base.assets import group_out_base
+from OpenStudioLandscapes.OpenCue.assets import (
+    build_docker_image,
+    feature_out_v2,
+)
 
 from OpenStudioLandscapes.OpenCue_Worker.definitions import assets_base
-
-
-from OpenStudioLandscapes.OpenCue.assets import (
-    feature_out_v2,
-    build_docker_image,
-)
 
 # The visualized DAG is cleaner when using `build_docker_image_spec`
 # instead of `build_docker_image.specs` - yet they should be
