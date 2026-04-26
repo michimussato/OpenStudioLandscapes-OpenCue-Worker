@@ -7,7 +7,7 @@ from pydantic import (
     Field,
     PositiveInt,
     field_validator,
-    computed_field,
+    # computed_field,
 )
 from pydantic_core import PydanticCustomError
 
@@ -59,7 +59,7 @@ class Config(FeatureBaseModel):
         return v
 
     # EXPANDABLE PATHS
-    @computed_field
+    # @computed_field
     @property
     def opencue_worker_storage_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
@@ -79,7 +79,7 @@ class Config(FeatureBaseModel):
         return ret
 
     # EXPANDABLE PATHS
-    @computed_field
+    # @computed_field
     @property
     def rqd_hosts_sh_expanded(self) -> pathlib.Path:
         LOGGER.debug(f"{self.env = }")
