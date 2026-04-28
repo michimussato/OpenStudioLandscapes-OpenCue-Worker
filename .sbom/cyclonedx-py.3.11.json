@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "bom-ref": "GitPython==3.1.47",
+      "bom-ref": "GitPython==3.1.48",
       "description": "GitPython is a Python library used to interact with Git repositories",
       "externalReferences": [
         {
@@ -19,9 +19,9 @@
         }
       ],
       "name": "GitPython",
-      "purl": "pkg:pypi/gitpython@3.1.47",
+      "purl": "pkg:pypi/gitpython@3.1.48",
       "type": "library",
-      "version": "3.1.47"
+      "version": "3.1.48"
     },
     {
       "bom-ref": "Jinja2==3.1.6",
@@ -1294,7 +1294,7 @@
       "version": "0.21"
     },
     {
-      "bom-ref": "greenlet==3.4.0",
+      "bom-ref": "greenlet==3.5.0",
       "description": "Lightweight in-process concurrent programming",
       "externalReferences": [
         {
@@ -1330,9 +1330,9 @@
         }
       ],
       "name": "greenlet",
-      "purl": "pkg:pypi/greenlet@3.4.0",
+      "purl": "pkg:pypi/greenlet@3.5.0",
       "type": "library",
-      "version": "3.4.0"
+      "version": "3.5.0"
     },
     {
       "bom-ref": "grpcio==1.80.0",
@@ -1832,7 +1832,7 @@
       "version": "0.5.2"
     },
     {
-      "bom-ref": "pip==26.0.1",
+      "bom-ref": "pip==26.1",
       "description": "The PyPA recommended tool for installing Python packages.",
       "externalReferences": [
         {
@@ -1865,9 +1865,9 @@
         }
       ],
       "name": "pip",
-      "purl": "pkg:pypi/pip@26.0.1",
+      "purl": "pkg:pypi/pip@26.1",
       "type": "library",
-      "version": "26.0.1"
+      "version": "26.1"
     },
     {
       "bom-ref": "pip-requirements-parser==32.0.1",
@@ -3097,7 +3097,7 @@
         "gitdb==4.0.12",
         "typing_extensions==4.15.0"
       ],
-      "ref": "GitPython==3.1.47"
+      "ref": "GitPython==3.1.48"
     },
     {
       "dependsOn": [
@@ -3122,7 +3122,7 @@
     },
     {
       "dependsOn": [
-        "GitPython==3.1.47",
+        "GitPython==3.1.48",
         "OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess==0.0.0",
         "PyYAML==6.0.3",
         "SnakeMD==2.4.0",
@@ -3144,7 +3144,7 @@
     },
     {
       "dependsOn": [
-        "greenlet==3.4.0",
+        "greenlet==3.5.0",
         "typing_extensions==4.15.0"
       ],
       "ref": "SQLAlchemy==2.0.49"
@@ -3328,7 +3328,7 @@
       "dependsOn": [
         "setuptools==82.0.1"
       ],
-      "ref": "greenlet==3.4.0"
+      "ref": "greenlet==3.5.0"
     },
     {
       "dependsOn": [
@@ -3427,7 +3427,7 @@
       "ref": "pip-requirements-parser==32.0.1"
     },
     {
-      "ref": "pip==26.0.1"
+      "ref": "pip==26.1"
     },
     {
       "dependsOn": [
@@ -3538,7 +3538,7 @@
       "dependsOn": [
         "filelock==3.29.0",
         "packaging==26.2",
-        "pip==26.0.1",
+        "pip==26.1",
         "tomli==2.4.1",
         "wheel==0.47.0"
       ],
@@ -3619,7 +3619,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-04-25T10:47:01.807423+00:00",
+    "timestamp": "2026-04-28T14:08:55.005764+00:00",
     "tools": {
       "components": [
         {
@@ -3723,7 +3723,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:14eba183-78af-49e9-8e7f-a18dd65b7b2f",
+  "serialNumber": "urn:uuid:ec5ecf1f-21f1-4e8d-8881-6a12490dcb95",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
