@@ -2,16 +2,14 @@ import enum
 import pathlib
 from typing import List
 
+from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
+from OpenStudioLandscapes.engine.logging.loggers import FEATURE_LOGGER as LOGGER
 from pydantic import (
     Field,
     PositiveInt,
     field_validator,
 )
 from pydantic_core import PydanticCustomError
-
-from OpenStudioLandscapes.engine.logging.loggers import FEATURE_LOGGER as LOGGER
-
-from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
 
 from OpenStudioLandscapes.OpenCue_Worker import constants, dist
 
@@ -100,6 +98,7 @@ if __name__ == "__main__":
     CONFIG_STR = Config.get_docs()
 else:
     import yaml
+
     CONFIG_STR = yaml.dump(
         Config.model_json_schema(mode="serialization"),
     )
