@@ -3,7 +3,6 @@ import pathlib
 from typing import List
 
 from OpenStudioLandscapes.engine.config.models import FeatureBaseModel
-from OpenStudioLandscapes.engine.logging.loggers import FEATURE_LOGGER as LOGGER
 from pydantic import (
     Field,
     PositiveInt,
@@ -11,7 +10,7 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
-from OpenStudioLandscapes.OpenCue_Worker import constants, dist
+from OpenStudioLandscapes.OpenCue_Worker import constants, dist, LOGGER
 
 
 class Branches(enum.StrEnum):
