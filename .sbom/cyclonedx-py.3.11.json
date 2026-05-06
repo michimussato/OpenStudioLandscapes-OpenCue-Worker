@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "bom-ref": "GitPython==3.1.49",
+      "bom-ref": "GitPython==3.1.50",
       "description": "GitPython is a Python library used to interact with Git repositories",
       "externalReferences": [
         {
@@ -19,9 +19,9 @@
         }
       ],
       "name": "GitPython",
-      "purl": "pkg:pypi/gitpython@3.1.49",
+      "purl": "pkg:pypi/gitpython@3.1.50",
       "type": "library",
-      "version": "3.1.49"
+      "version": "3.1.50"
     },
     {
       "bom-ref": "Jinja2==3.1.6",
@@ -1832,7 +1832,7 @@
       "version": "0.5.2"
     },
     {
-      "bom-ref": "pip==26.1",
+      "bom-ref": "pip==26.1.1",
       "description": "The PyPA recommended tool for installing Python packages.",
       "externalReferences": [
         {
@@ -1865,9 +1865,9 @@
         }
       ],
       "name": "pip",
-      "purl": "pkg:pypi/pip@26.1",
+      "purl": "pkg:pypi/pip@26.1.1",
       "type": "library",
-      "version": "26.1"
+      "version": "26.1.1"
     },
     {
       "bom-ref": "pip-requirements-parser==32.0.1",
@@ -3135,7 +3135,7 @@
         "gitdb==4.0.12",
         "typing_extensions==4.15.0"
       ],
-      "ref": "GitPython==3.1.49"
+      "ref": "GitPython==3.1.50"
     },
     {
       "dependsOn": [
@@ -3160,7 +3160,7 @@
     },
     {
       "dependsOn": [
-        "GitPython==3.1.49",
+        "GitPython==3.1.50",
         "OpenStudioLandscapes-DagsterCodeLocation-StreamingProcess==0.0.0",
         "PyYAML==6.0.3",
         "SnakeMD==2.4.0",
@@ -3466,7 +3466,7 @@
       "ref": "pip-requirements-parser==32.0.1"
     },
     {
-      "ref": "pip==26.1"
+      "ref": "pip==26.1.1"
     },
     {
       "dependsOn": [
@@ -3580,7 +3580,7 @@
       "dependsOn": [
         "filelock==3.29.0",
         "packaging==26.2",
-        "pip==26.1",
+        "pip==26.1.1",
         "tomli==2.4.1",
         "wheel==0.47.0"
       ],
@@ -3661,7 +3661,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-05-04T11:50:13.376805+00:00",
+    "timestamp": "2026-05-06T12:26:04.053906+00:00",
     "tools": {
       "components": [
         {
@@ -3765,7 +3765,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:0f1d24a2-6d45-4b47-a8c4-ab0bbfd544c3",
+  "serialNumber": "urn:uuid:88b1ad65-b2e5-4740-90b0-dca196ec73f2",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",

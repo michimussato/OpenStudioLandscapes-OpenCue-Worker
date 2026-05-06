@@ -10,7 +10,7 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
-from OpenStudioLandscapes.OpenCue_Worker import constants, dist, LOGGER
+from OpenStudioLandscapes.OpenCue_Worker import LOGGER, constants, dist
 
 
 class Branches(enum.StrEnum):
