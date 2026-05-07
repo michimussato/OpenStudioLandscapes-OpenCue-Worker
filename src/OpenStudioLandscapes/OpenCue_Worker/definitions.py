@@ -4,7 +4,10 @@ from dagster import (
 )
 
 import OpenStudioLandscapes.OpenCue_Worker.assets
-from OpenStudioLandscapes.OpenCue_Worker import *
+from OpenStudioLandscapes.OpenCue_Worker import (
+    LOGGER,
+    dist,
+)
 
 LOGGER.info(f"Loading {dist.name} assets...")
 
