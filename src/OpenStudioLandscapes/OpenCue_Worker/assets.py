@@ -40,16 +40,14 @@ from OpenStudioLandscapes.engine.utils import (
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
     get_network_dicts,
 )
+from OpenStudioLandscapes.OpenCue import ASSET_HEADER as ASSET_HEADER_FEATURE_IN
 
 # Override default ConfigParent
 from OpenStudioLandscapes.OpenCue.config.models import Config as ConfigParent
-from OpenStudioLandscapes.OpenCue import (
-    ASSET_HEADER as ASSET_HEADER_FEATURE_IN,
-)
 
 from OpenStudioLandscapes.OpenCue_Worker import (
-    config,
     ASSET_HEADER,
+    config,
 )
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
