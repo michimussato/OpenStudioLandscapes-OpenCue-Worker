@@ -43,13 +43,13 @@ from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
 
 # Override default ConfigParent
 from OpenStudioLandscapes.OpenCue.config.models import Config as ConfigParent
-from OpenStudioLandscapes.OpenCue.constants import (
+from OpenStudioLandscapes.OpenCue import (
     ASSET_HEADER as ASSET_HEADER_FEATURE_IN,
 )
 
 from OpenStudioLandscapes.OpenCue_Worker import (
     config,
-    constants,
+    ASSET_HEADER,
 )
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
@@ -65,38 +65,38 @@ yaml.SafeDumper.add_multi_representer(
 )
 
 cmd: AssetsDefinition = cmd.get_feature__cmd(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 CONFIG: AssetsDefinition = feature.get_feature__CONFIG(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     CONFIG_STR=config.models.CONFIG_STR,
     search_model_of_type=config.models.Config,
 )
 
 feature_in: AssetsDefinition = group_in.get_feature_in(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     ASSET_HEADER_BASE=ASSET_HEADER_BASE,
     ASSET_HEADER_FEATURE_IN=ASSET_HEADER_FEATURE_IN,
 )
 
 group_out: AssetsDefinition = group_out.get_group_out(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 docker_compose_graph: AssetsDefinition = docker_compose_graph.get_docker_compose_graph(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 compose: AssetsDefinition = compose.get_compose(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
 feature_out_v2: AssetsDefinition = feature_out.get_feature_out_v2(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
 )
 
 
@@ -105,16 +105,16 @@ feature_out_v2: AssetsDefinition = feature_out.get_feature_out_v2(
 # - CONFIG_PARENT
 # if ConfigParent is or type FeatureBaseModel
 feature_in_parent: Union[AssetsDefinition, None] = group_in.get_feature_in_parent(
-    ASSET_HEADER=constants.ASSET_HEADER,
+    ASSET_HEADER=ASSET_HEADER,
     config_parent=ConfigParent,
 )
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
     },
 )
@@ -128,7 +128,7 @@ def compose_networks(
     env: Dict = CONFIG.env
 
     # Possible overrides:
-    # https://github.com/AcademySoftwareFoundation/OpenCue/blob/master/rqd/rqd/rqconstants.py
+    # https://github.com/AcademySoftwareFoundation/OpenCue/blob/master/rqd/rqd/rqpy
     # rqd does weird things in order to get the hostname
     # https://github.com/AcademySoftwareFoundation/OpenCue/blob/ce61412b723c4020a6676842e175a228b3026daa/rqd/rqd/rqutil.py#L207
     # In HOST mode, it resolves to the hostname of the host instead
@@ -204,16 +204,16 @@ def compose_networks(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "CONFIG": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG"]),
         ),
         "CONFIG_PARENT": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "CONFIG_PARENT"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "CONFIG_PARENT"]),
         ),
         "compose_networks": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_networks"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build_docker_image": AssetIn(
             AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]),
@@ -304,7 +304,7 @@ def compose_rqd_worker(
             # {auto_generated}
             # {dagster_url}
             # Reference
-            # https://github.com/AcademySoftwareFoundation/OpenCue/blob/ce61412b723c4020a6676842e175a228b3026daa/rqd/rqd/rqconstants.py#L188
+            # https://github.com/AcademySoftwareFoundation/OpenCue/blob/ce61412b723c4020a6676842e175a228b3026daa/rqd/rqd/rqpy#L188
             [Override]
             USE_NIMBY_PYNPUT=false
             RQD_USE_IP_AS_HOSTNAME=false
@@ -395,7 +395,7 @@ def compose_rqd_worker(
                         "PYTHONUNBUFFERED": "1",
                         # Todo:
                         #  - [ ] use fqdn instead of just hostname?
-                        # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqconstants.py
+                        # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqpy
                         "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
                         # Todo
                         #  - [ ] Is this still necessary now that we *can*
@@ -431,10 +431,10 @@ def compose_rqd_worker(
 
 
 @asset(
-    **constants.ASSET_HEADER,
+    **ASSET_HEADER,
     ins={
         "compose_rqd_worker": AssetIn(
-            AssetKey([*constants.ASSET_HEADER["key_prefix"], "compose_rqd_worker"]),
+            AssetKey([*ASSET_HEADER["key_prefix"], "compose_rqd_worker"]),
         ),
     },
 )
