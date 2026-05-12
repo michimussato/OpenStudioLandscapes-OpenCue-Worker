@@ -81,76 +81,73 @@ The following settings are available in `OpenStudioLandscapes-OpenCue-Worker` an
 
 
 ```yaml
-properties:
-  compose_scope:
-    default: worker
-    title: Compose Scope
+compose_scope:
+  default: worker
+  title: Compose Scope
+  type: string
+docker_compose:
+  default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml'
+  description: The path to the `docker-compose.yml` file.
+  format: path
+  title: Docker Compose
+  type: string
+enabled:
+  default: true
+  description: Whether the Feature is enabled or not.
+  title: Enabled
+  type: boolean
+env:
+  additionalProperties: true
+  title: Env
+  type: object
+feature_name:
+  default: OpenStudioLandscapes-OpenCue-Worker
+  title: Feature Name
+  type: string
+group_name:
+  default: OpenStudioLandscapes_OpenCue_Worker
+  title: Group Name
+  type: string
+key_prefixes:
+  default:
+  - OpenStudioLandscapes_OpenCue_Worker
+  items:
     type: string
-  docker_compose:
-    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/docker_compose/docker-compose.yml'
-    description: The path to the `docker-compose.yml` file.
-    format: path
-    title: Docker Compose
+  title: Key Prefixes
+  type: array
+local_bind_volumes:
+  description: Here you can define Feature specific, arbitrary, absolute bind volume
+    mappings.
+  items:
     type: string
-  enabled:
-    default: true
-    description: Whether the Feature is enabled or not.
-    title: Enabled
-    type: boolean
-  env:
-    additionalProperties: true
-    title: Env
-    type: object
-  feature_name:
-    default: OpenStudioLandscapes-OpenCue-Worker
-    title: Feature Name
+  title: Local Bind Volumes
+  type: array
+local_environment_variables:
+  additionalProperties:
     type: string
-  group_name:
-    default: OpenStudioLandscapes_OpenCue_Worker
-    title: Group Name
-    type: string
-  key_prefixes:
-    default:
-    - OpenStudioLandscapes_OpenCue_Worker
-    items:
-      type: string
-    title: Key Prefixes
-    type: array
-  local_bind_volumes:
-    description: Here you can define Feature specific, arbitrary, absolute bind volume
-      mappings.
-    items:
-      type: string
-    title: Local Bind Volumes
-    type: array
-  local_environment_variables:
-    additionalProperties:
-      type: string
-    description: Here you can define Feature specific, arbitrary environment variables.
-    title: Local Environment Variables
-    type: object
-  opencue_rqd_worker:
-    default: opencue-rqd-worker
-    title: Opencue Rqd Worker
-    type: string
-  opencue_worker_NUM_SERVICES:
-    default: 1
-    description: Number of workers to simulate in parallel.
-    exclusiveMinimum: 0
-    title: Opencue Worker Num Services
-    type: integer
-  opencue_worker_PADDING:
-    default: 3
-    exclusiveMinimum: 0
-    title: Opencue Worker Padding
-    type: integer
-  opencue_worker_storage:
-    default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
-    format: path
-    title: Opencue Worker Storage
-    type: string
-title: Config
-type: object
+  description: Here you can define Feature specific, arbitrary environment variables.
+  title: Local Environment Variables
+  type: object
+opencue_rqd_worker:
+  default: opencue-rqd-worker
+  title: Opencue Rqd Worker
+  type: string
+opencue_worker_NUM_SERVICES:
+  default: 1
+  description: Number of workers to simulate in parallel.
+  exclusiveMinimum: 0
+  title: Opencue Worker Num Services
+  type: integer
+opencue_worker_PADDING:
+  default: 3
+  exclusiveMinimum: 0
+  title: Opencue Worker Padding
+  type: integer
+opencue_worker_storage:
+  default: '{DOT_LANDSCAPES}/{LANDSCAPE}/{FEATURE}/storage'
+  format: path
+  title: Opencue Worker Storage
+  type: string
 
 ```
 
@@ -212,4 +209,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-05-09 11:25:45 UTC**
+Last changed: **2026-05-12 10:00:58 UTC**
