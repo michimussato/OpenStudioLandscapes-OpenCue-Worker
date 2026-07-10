@@ -6,6 +6,7 @@
    1. [Brief](#brief)
    2. [Clone](#clone)
       1. [Clone and Install](#clone-and-install)
+      2. [Uninstall](#uninstall)
    3. [Configure](#configure)
       1. [Default Configuration](#default-configuration)
    4. [Local Development/Unit Testing/Debugging](#local-developmentunit-testingdebugging)
@@ -41,13 +42,31 @@ deactivate
 # Check the resulting console output for installation instructions
 ```
 
+If Feature repository was cloned locally already:
+
+```shell
+# cd OpenStudioLandscapes
+source .venv/bin/activate
+pip install --editable ./.features/<Feature>
+deactivate
+# Check the resulting console output for installation instructions
+```
+
 ### Clone and Install
 
 ```shell
 # cd OpenStudioLandscapes
 source .venv/bin/activate
-openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git \
-    && pip install --editable ./.features/OpenStudioLandscapes-OpenCue-Worker
+openstudiolandscapes clone-feature --repo=https://github.com/michimussato/OpenStudioLandscapes-OpenCue-Worker.git --install
+deactivate
+```
+
+### Uninstall
+
+```shell
+# cd OpenStudioLandscapes
+source .venv/bin/activate
+pip uninstall OpenStudioLandscapes-OpenCue-Worker
 deactivate
 ```
 
@@ -209,4 +228,4 @@ To follow up on the previous LinkedIn publications, visit:
 
 ***
 
-Last changed: **2026-06-18 22:07:54 UTC**
+Last changed: **2026-07-09 12:16:25 UTC**
