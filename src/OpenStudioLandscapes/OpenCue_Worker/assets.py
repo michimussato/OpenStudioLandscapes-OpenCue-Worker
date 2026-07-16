@@ -213,8 +213,14 @@ def compose_networks(
         "compose_networks": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
-        "build_docker_image": AssetIn(
-            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]),
+        # "build_docker_image": AssetIn(
+        #     AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]),
+        # ),
+        "clone_repository": AssetIn(
+            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "clone_repository"]),
+        ),
+        "compose_opencue_base": AssetIn(
+            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "compose_opencue_base"]),
         ),
     },
     description=textwrap.dedent("""
@@ -246,7 +252,9 @@ def compose_rqd_worker(
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
-    build_docker_image: Dict,  # pylint: disable=redefined-outer-name
+    # build_docker_image: Dict,  # pylint: disable=redefined-outer-name
+    clone_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
+    compose_opencue_base: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
 
@@ -332,6 +340,14 @@ def compose_rqd_worker(
             ]
         }
 
+        service_name_cuebot = CONFIG_PARENT.opencue_cuebot
+        container_name_cuebot, host_name_cuebot = get_docker_compose_names(
+            context=context,
+            service_name=service_name_cuebot,
+            landscape_id=env.get("LANDSCAPE", "default"),
+            domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        )
+
         # For portability, convert absolute volume paths to relative paths
 
         _volume_relative = []
@@ -370,16 +386,31 @@ def compose_rqd_worker(
         #     domain_lan=config_engine.openstudiolandscapes__domain_lan,
         # )
 
+        compose_rqd_base = compose_opencue_base.get("services", {}).get("rqd")
+        compose_rqd_base.pop("profiles", None)
+        compose_rqd_base.pop("depends_on", None)
+
+        context_ = clone_repository.joinpath(compose_rqd_base["build"]["context"])
+        d = {
+            "build": {
+                # Just prepend the full path to the cloned repo
+                "context": context_.as_posix(),
+                "dockerfile": context_.joinpath(compose_rqd_base["build"]["dockerfile"]).as_posix(),
+            },
+        }
+
         docker_dict["services"].update(
             {
                 service_name: {
                     # "image": CONFIG_PARENT.OPENCUE_RQD_DOCKER_IMAGE,
-                    "image": "%s%s:%s"
-                    % (
-                        build_docker_image["image_prefixes"],
-                        build_docker_image["image_name"],
-                        build_docker_image["image_tags"][0],
-                    ),
+                    # "image": "%s%s:%s"
+                    # % (
+                    #     build_docker_image["image_prefixes"],
+                    #     build_docker_image["image_name"],
+                    #     build_docker_image["image_tags"][0],
+                    # ),
+                    **compose_rqd_base,
+                    **d,
                     "container_name": container_name,
                     # To have a unique, dynamic hostname, we simply must not
                     # specify it.
@@ -394,7 +425,9 @@ def compose_rqd_worker(
                         # Todo:
                         #  - [ ] use fqdn instead of just hostname?
                         # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqpy
-                        "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
+                        # "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
+                        "OPENRQD__GRPC__CUEBOT_ENDPOINTS": f"{host_name_cuebot}:{CONFIG_PARENT.OPENCUE_CUEBOT_GRPC_CUE_PORT_HOST}",
+                        "OPENRQD__MACHINE__USE_IP_AS_HOSTNAME": False,
                         # Todo
                         #  - [ ] Is this still necessary now that we *can*
                         #        specify the worker hostname at runtime?
