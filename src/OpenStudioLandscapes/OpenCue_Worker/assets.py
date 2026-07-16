@@ -213,11 +213,8 @@ def compose_networks(
         "compose_networks": AssetIn(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
-        # "build_docker_image": AssetIn(
-        #     AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image"]),
-        # ),
-        "clone_repository": AssetIn(
-            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "clone_repository"]),
+        "build_docker_image_rqd": AssetIn(
+            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image_rqd"]),
         ),
         "compose_opencue_base": AssetIn(
             AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "compose_opencue_base"]),
@@ -252,8 +249,7 @@ def compose_rqd_worker(
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
-    # build_docker_image: Dict,  # pylint: disable=redefined-outer-name
-    clone_repository: pathlib.Path,  # pylint: disable=redefined-outer-name
+    build_docker_image_rqd: Dict,  # pylint: disable=redefined-outer-name
     compose_opencue_base: Dict,  # pylint: disable=redefined-outer-name
 ) -> Generator[Output[Dict] | AssetMaterialization, None, None]:
     """ """
@@ -370,6 +366,14 @@ def compose_rqd_worker(
         volumes_dict = {
             "volumes": list(
                 {
+                    # Todo
+                    #  - [ ] Check Rez paths etc.
+                    #        volumes:
+                    #        - /data/share/rez-packages/packages:/data/share/rez-packages/packages
+                    #        - /home/michael/.rez/packages/int:/home/michael/.rez/packages/int
+                    #        - /home/michael/packages:/home/michael/packages
+                    #        - /data/share:/data/share:rw
+                    #        [...]
                     *_volume_relative,
                     *config_engine.global_bind_volumes,
                     *CONFIG.local_bind_volumes,
@@ -386,31 +390,21 @@ def compose_rqd_worker(
         #     domain_lan=config_engine.openstudiolandscapes__domain_lan,
         # )
 
-        compose_rqd_base = compose_opencue_base.get("services", {}).get("rqd")
+        compose_rqd_base = compose_opencue_base.get("services", {}).get("rqd", {})
         compose_rqd_base.pop("profiles", None)
+        compose_rqd_base.pop("build", None)
         compose_rqd_base.pop("depends_on", None)
-
-        context_ = clone_repository.joinpath(compose_rqd_base["build"]["context"])
-        d = {
-            "build": {
-                # Just prepend the full path to the cloned repo
-                "context": context_.as_posix(),
-                "dockerfile": context_.joinpath(compose_rqd_base["build"]["dockerfile"]).as_posix(),
-            },
-        }
 
         docker_dict["services"].update(
             {
                 service_name: {
-                    # "image": CONFIG_PARENT.OPENCUE_RQD_DOCKER_IMAGE,
-                    # "image": "%s%s:%s"
-                    # % (
-                    #     build_docker_image["image_prefixes"],
-                    #     build_docker_image["image_name"],
-                    #     build_docker_image["image_tags"][0],
-                    # ),
                     **compose_rqd_base,
-                    **d,
+                    "image": "%s%s:%s"
+                    % (
+                        build_docker_image_rqd["image_prefixes"],
+                        build_docker_image_rqd["image_name"],
+                        build_docker_image_rqd["image_tags"][0],
+                    ),
                     "container_name": container_name,
                     # To have a unique, dynamic hostname, we simply must not
                     # specify it.
@@ -418,7 +412,6 @@ def compose_rqd_worker(
                     # https://shantanoo-desai.github.io/posts/technology/hostname-docker-container/
                     # "hostname": host_name,
                     "domainname": config_engine.openstudiolandscapes__domain_lan,
-                    "restart": DockerComposePolicies.RESTART_POLICY.ALWAYS.value,
                     "environment": {
                         "TZ": config_engine.tz,
                         "PYTHONUNBUFFERED": "1",
