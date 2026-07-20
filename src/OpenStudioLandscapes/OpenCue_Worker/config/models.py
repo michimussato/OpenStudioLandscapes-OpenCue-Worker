@@ -76,25 +76,7 @@ class Config(FeatureBaseModel):
         )
         return ret
 
-    # EXPANDABLE PATHS
-    @property
-    def rqd_hosts_sh_expanded(self) -> pathlib.Path:
-        LOGGER.debug(f"{self.env = }")
-        if self.env is None:
-            raise KeyError("`env` is `None`.")
-
-        LOGGER.debug(f"Expanding {self.rqd_hosts_sh}...")
-        ret = pathlib.Path(
-            self.rqd_hosts_sh.expanduser()  # pylint: disable=E1101
-            .as_posix()
-            .format(
-                **{
-                    "FEATURE": self.feature_name,
-                    **self.env,
-                }
-            )
-        )
-        return ret
+    # # EXPANDABLE PATHS
 
 
 if __name__ == "__main__":
