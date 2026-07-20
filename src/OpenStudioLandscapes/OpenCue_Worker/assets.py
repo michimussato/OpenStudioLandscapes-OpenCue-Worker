@@ -214,7 +214,9 @@ def compose_networks(
             AssetKey([*ASSET_HEADER["key_prefix"], "compose_networks"]),
         ),
         "build_docker_image_rqd": AssetIn(
-            AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image_rqd"]),
+            AssetKey(
+                [*ASSET_HEADER_FEATURE_IN["key_prefix"], "build_docker_image_rqd"]
+            ),
         ),
         "compose_opencue_base": AssetIn(
             AssetKey([*ASSET_HEADER_FEATURE_IN["key_prefix"], "compose_opencue_base"]),

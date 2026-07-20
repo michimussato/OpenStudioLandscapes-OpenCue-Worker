@@ -1,18 +1,23 @@
 ************* Module OpenStudioLandscapes.OpenCue_Worker.assets
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:394:25: W0511: Todo: (fixme)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:398:25: W0511: Todo (fixme)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:371:21: W0511: Todo (fixme)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:420:25: W0511: Todo: (fixme)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:426:25: W0511: Todo (fixme)
 src/OpenStudioLandscapes/OpenCue_Worker/assets.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/assets.py:119:0: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:244:0: C0112: Empty function docstring (empty-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:244:0: R0914: Too many local variables (26/15) (too-many-locals)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:320:8: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:377:29: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
-src/OpenStudioLandscapes/OpenCue_Worker/assets.py:439:0: C0116: Missing function or method docstring (missing-function-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:249:0: C0112: Empty function docstring (empty-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:249:0: R0913: Too many arguments (6/5) (too-many-arguments)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:249:0: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:249:0: R0914: Too many local variables (31/15) (too-many-locals)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:326:8: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:404:29: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:342:8: W0612: Unused variable 'container_name_cuebot' (unused-variable)
+src/OpenStudioLandscapes/OpenCue_Worker/assets.py:467:0: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.definitions
 src/OpenStudioLandscapes/OpenCue_Worker/definitions.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/definitions.py:12:0: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 ************* Module OpenStudioLandscapes.OpenCue_Worker._definitions_with_upstream_specs
 src/OpenStudioLandscapes/OpenCue_Worker/_definitions_with_upstream_specs.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+src/OpenStudioLandscapes/OpenCue_Worker/_definitions_with_upstream_specs.py:3:0: E0611: No name 'build_docker_image' in module 'OpenStudioLandscapes.OpenCue.assets' (no-name-in-module)
 ************* Module OpenStudioLandscapes.OpenCue_Worker.__init__
 src/OpenStudioLandscapes/OpenCue_Worker/__init__.py:15:5: W0511: TODO: Import directly (no need for conditional) when `python_requires = >= 3.8` (fixme)
 ************* Module OpenStudioLandscapes.OpenCue_Worker
@@ -29,9 +34,6 @@ src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:51:4: C0103: Method nam
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:62:4: C0116: Missing function or method docstring (missing-function-docstring)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:63:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:66:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:81:4: C0116: Missing function or method docstring (missing-function-docstring)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:82:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:86:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:6:0: C0411: third party import "pydantic.Field" should be placed before first party import "OpenStudioLandscapes.engine.config.models.FeatureBaseModel"  (wrong-import-order)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:11:0: C0411: third party import "pydantic_core.PydanticCustomError" should be placed before first party import "OpenStudioLandscapes.engine.config.models.FeatureBaseModel"  (wrong-import-order)
 src/OpenStudioLandscapes/OpenCue_Worker/config/models.py:13:0: C0412: Imports from package OpenStudioLandscapes are not grouped (ungrouped-imports)
@@ -42,5 +44,5 @@ src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:6:0: C0116: Missing functi
 src/OpenStudioLandscapes/OpenCue_Worker/doc/readme.py:21:8: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.94/10 (previous run: 8.02/10, -0.08)
+Your code has been rated at 7.57/10 (previous run: 8.02/10, -0.45)
 
