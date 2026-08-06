@@ -26,7 +26,8 @@ from OpenStudioLandscapes.engine.common_assets import (
     group_in,
     group_out,
 )
-from OpenStudioLandscapes.engine.config.models import ConfigEngine
+from OpenStudioLandscapes.engine.env.configurable_resources.config_engine import ConfigEngineConfigurableResource
+from OpenStudioLandscapes.engine.base.configurable_resources.rez_resource import RezConfigurableResource
 from OpenStudioLandscapes.engine.constants import (
     ASSET_HEADER_BASE,
 )
@@ -248,6 +249,8 @@ def compose_networks(
 )
 def compose_rqd_worker(
     context: AssetExecutionContext,
+    config_ConfigEngineConfigurableResource: ConfigEngineConfigurableResource,
+    config_RezConfigurableResource: RezConfigurableResource,
     CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
@@ -257,8 +260,6 @@ def compose_rqd_worker(
     """ """
 
     env: Dict = CONFIG.env
-
-    config_engine: ConfigEngine = CONFIG.config_engine
 
     service_name_base = CONFIG.opencue_rqd_worker
 
@@ -279,7 +280,7 @@ def compose_rqd_worker(
             context=context,
             service_name=service_name,
             landscape_id=env.get("LANDSCAPE", "default"),
-            domain_lan=config_engine.openstudiolandscapes__domain_lan,
+            domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
         )
 
         network_dict = {}
@@ -343,7 +344,7 @@ def compose_rqd_worker(
             context=context,
             service_name=service_name_cuebot,
             landscape_id=env.get("LANDSCAPE", "default"),
-            domain_lan=config_engine.openstudiolandscapes__domain_lan,
+            domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
         )
 
         # For portability, convert absolute volume paths to relative paths
@@ -377,9 +378,9 @@ def compose_rqd_worker(
                     #        - /data/share:/data/share:rw
                     #        [...]
                     *_volume_relative,
-                    *config_engine.global_bind_volumes,
+                    *config_ConfigEngineConfigurableResource.global_bind_volumes,
                     *CONFIG.local_bind_volumes,
-                    *config_engine.openstudiolandscapes__rez_config.REZ_PACKAGES_PATH_VOL,
+                    *config_RezConfigurableResource.REZ_PACKAGES_PATH_VOL,
                 }
             )
         }
@@ -389,7 +390,7 @@ def compose_rqd_worker(
         #     context=context,
         #     service_name=f"opencue-{service_name}",
         #     landscape_id=env.get("LANDSCAPE", "default"),
-        #     domain_lan=config_engine.openstudiolandscapes__domain_lan,
+        #     domain_lan=config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
         # )
 
         compose_rqd_base = compose_opencue_base.get("services", {}).get("rqd", {})
@@ -413,14 +414,14 @@ def compose_rqd_worker(
                     # https://forums.docker.com/t/docker-compose-set-container-name-and-hostname-dynamicaly/138259/2
                     # https://shantanoo-desai.github.io/posts/technology/hostname-docker-container/
                     # "hostname": host_name,
-                    "domainname": config_engine.openstudiolandscapes__domain_lan,
+                    "domainname": config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan,
                     "environment": {
-                        "TZ": config_engine.tz,
+                        "TZ": config_ConfigEngineConfigurableResource.tz,
                         "PYTHONUNBUFFERED": "1",
                         # Todo:
                         #  - [ ] use fqdn instead of just hostname?
                         # OpenStudioLandscapes-OpenCue/OpenStudioLandscapes_OpenCue__clone_repository/repos/OpenCue/rqd/rqd/rqpy
-                        # "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_engine.openstudiolandscapes__domain_lan}",
+                        # "CUEBOT_HOSTNAME": f"{CONFIG_PARENT.opencue_str}-cuebot.{config_ConfigEngineConfigurableResource.openstudiolandscapes__domain_lan}",
                         "OPENRQD__GRPC__CUEBOT_ENDPOINTS": f"{host_name_cuebot}:{CONFIG_PARENT.OPENCUE_CUEBOT_GRPC_CUE_PORT_HOST}",
                         "OPENRQD__MACHINE__USE_IP_AS_HOSTNAME": False,
                         # Todo
@@ -428,9 +429,9 @@ def compose_rqd_worker(
                         #        specify the worker hostname at runtime?
                         "HOSTNAME": "${HOSTNAME}${HOSTNAME:+-}%s-%s"
                         % (CONFIG.compose_scope, container_name),
-                        **config_engine.global_environment_variables,
+                        **config_ConfigEngineConfigurableResource.global_environment_variables,
                         **CONFIG.local_environment_variables,
-                        **config_engine.openstudiolandscapes__rez_config.REZ_ENVIRONMENT,
+                        **config_RezConfigurableResource.REZ_ENVIRONMENT,
                     },
                     **copy.deepcopy(volumes_dict),
                     **copy.deepcopy(network_dict),
