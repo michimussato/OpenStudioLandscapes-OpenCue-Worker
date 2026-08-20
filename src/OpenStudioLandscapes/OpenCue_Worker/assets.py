@@ -40,15 +40,16 @@ from OpenStudioLandscapes.engine.utils import (
 from OpenStudioLandscapes.engine.utils.docker.compose_dicts import (
     get_network_dicts,
 )
-from OpenStudioLandscapes.OpenCue import ASSET_HEADER as ASSET_HEADER_FEATURE_IN
+from OpenStudioLandscapes.OpenCue.constants import ASSET_HEADER as ASSET_HEADER_FEATURE_IN
 
 # Override default ConfigParent
 from OpenStudioLandscapes.OpenCue.config.models import Config as ConfigParent
 
-from OpenStudioLandscapes.OpenCue_Worker import (
+from OpenStudioLandscapes.OpenCue_Worker.constants import (
     ASSET_HEADER,
-    config,
+    dist,
 )
+from OpenStudioLandscapes.OpenCue_Worker.config import models
 
 # https://github.com/yaml/pyyaml/issues/722#issuecomment-1969292770
 yaml.SafeDumper.add_multi_representer(
@@ -68,8 +69,8 @@ cmd: AssetsDefinition = cmd.get_feature__cmd(
 
 CONFIG: AssetsDefinition = feature.get_feature__CONFIG(
     ASSET_HEADER=ASSET_HEADER,
-    CONFIG_STR=config.models.CONFIG_STR,
-    search_model_of_type=config.models.Config,
+    CONFIG_STR=models.CONFIG_STR,
+    search_model_of_type=models.Config,
 )
 
 feature_in: AssetsDefinition = group_in.get_feature_in(
@@ -118,7 +119,7 @@ feature_in_parent: Union[AssetsDefinition, None] = group_in.get_feature_in_paren
 )
 def compose_networks(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
 ) -> Generator[
     Output[Dict[str, Dict[str, Dict[str, str]]]] | AssetMaterialization, None, None
 ]:
@@ -248,7 +249,7 @@ def compose_networks(
 )
 def compose_rqd_worker(
     context: AssetExecutionContext,
-    CONFIG: config.models.Config,  # pylint: disable=redefined-outer-name
+    CONFIG: models.Config,  # pylint: disable=redefined-outer-name
     CONFIG_PARENT: ConfigParent,  # pylint: disable=redefined-outer-name
     compose_networks: Dict,  # pylint: disable=redefined-outer-name
     build_docker_image_rqd: Dict,  # pylint: disable=redefined-outer-name
