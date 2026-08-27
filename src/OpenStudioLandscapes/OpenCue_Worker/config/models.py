@@ -10,7 +10,7 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
-from OpenStudioLandscapes.OpenCue_Worker import (
+from OpenStudioLandscapes.OpenCue_Worker.constants import (
     ASSET_HEADER,
     LOGGER,
     dist,
